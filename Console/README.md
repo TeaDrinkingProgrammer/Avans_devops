@@ -1,1 +1,1 @@
-Case excercise for the subject: "Software Design and Archtecture. Subject at Avans University of Applied Science in Year 3 of the study.
+Case excercise for the subject: "Software Design and Architecture. Subject at AvCase excercise for the subjectCase excercise for the subject: "Software Design and Archtecture : "Software Design and Archtecture ans University of Applied Science in Year 3 of the study.
