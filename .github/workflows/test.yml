@@ -57,7 +57,7 @@ jobs:
 
     env:
       Solution_Name: De_Flierefluiter.sln                         # Replace with your solution name, i.e. MyWpfApp.sln.
-      Test_Project_Path: Cinema\Domain.Tests\Domain.Tests.csproj               # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
+      Test_Project_Path: Domain.Tests\Domain.Test.csproj               # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
 
     steps:
     - name: Checkout
