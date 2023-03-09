@@ -2,13 +2,13 @@ namespace Domain;
 
 public class TeamMember
 {
-    public string Name;
-    private TeamMemberNotifier _notifier;
+    public readonly string Name;
+    private readonly TeamMemberNotifier _notifier;
 
-    public TeamMember(String name)
+    public TeamMember(string name)
     {
         Name = name;
-        _notifier = new TeamMemberNotifier(this);
+        _notifier = new TeamMemberNotifier();
     }
 
     public void Notify(TeamMemberNotification notification)

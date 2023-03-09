@@ -2,12 +2,12 @@ namespace Domain;
 
 public class EmailNotifier : IObserver<TeamMemberNotification>
 {
-    private String Email;
-    private IWriter _writer;
+    private readonly string _email;
+    private readonly IWriter _writer;
 
-    public EmailNotifier(String email, IWriter writer)
+    public EmailNotifier(string email, IWriter writer)
     {
-        Email = email;
+        _email = email;
         _writer = writer;
     }
     public void OnCompleted()
@@ -21,6 +21,6 @@ public class EmailNotifier : IObserver<TeamMemberNotification>
     public void OnNext(TeamMemberNotification notification)
     {
         Console.WriteLine();
-        _writer.WriteLine($"To: {notification.TeamMember.Name} <{Email}>: {notification.Message}");
+        _writer.WriteLine($"To: {notification.TeamMember.Name} <{_email}>: {notification.Message}");
     }
 }

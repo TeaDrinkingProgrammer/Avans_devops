@@ -9,12 +9,12 @@ public class TeamMemberNotifierTest
     public void NotifyScrumMasterViaEmail()
     {
         var writer = Substitute.For<IWriter>();
-        
-        var sprint = new Sprint();
-        sprint.ScrumMaster = new TeamMember("Jan de Testerman");
-        sprint.ScrumMaster.Subscribe(new EmailNotifier("jandetesterman@gmail.com", writer));
+
+        var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+            new TeamMember("Jan de Productowner"));
+        sprint.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", writer));
         sprint.ScrumMaster.Notify(new TeamMemberNotification(sprint.ScrumMaster, "Hello scrummaster!"));
 
-        writer.Received().WriteLine("To: Jan de Testerman <jandetesterman@gmail.com>: Hello scrummaster!");
+        writer.Received().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Hello scrummaster!");
     }
 }

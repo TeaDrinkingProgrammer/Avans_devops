@@ -2,36 +2,30 @@ namespace Domain;
 
 public class TeamMemberNotifier: IObservable<TeamMemberNotification>
 {
-    public List<IObserver<TeamMemberNotification>> Observers = new();
-    private TeamMember _teamMember;
-
-    public TeamMemberNotifier(TeamMember teamMember)
-    {
-        _teamMember = teamMember;
-    }
+    private readonly List<IObserver<TeamMemberNotification>> _observers = new();
 
     public void Notify(TeamMemberNotification message)
     {
-        foreach (var observer in Observers)
+        foreach (var observer in _observers)
         {
             observer.OnNext(message);
         }
     }
     public IDisposable Subscribe(IObserver<TeamMemberNotification> observer)
     {
-        if (! Observers.Contains(observer)) Observers.Add(observer);
-        return new Unsubscriber(Observers, observer);
+        if (! _observers.Contains(observer)) _observers.Add(observer);
+        return new Unsubscriber(_observers, observer);
     }
     
     private class Unsubscriber : IDisposable
     {
-        private IList<IObserver<TeamMemberNotification>> _observers;
-        private IObserver<TeamMemberNotification> _observer;
+        private readonly IList<IObserver<TeamMemberNotification>> _observers;
+        private readonly IObserver<TeamMemberNotification>? _observer;
 
         public Unsubscriber(List<IObserver<TeamMemberNotification>> observers, IObserver<TeamMemberNotification> observer)
         {
-            this._observers = observers;
-            this._observer = observer;
+            _observers = observers;
+            _observer = observer;
         }
 
         public void Dispose()

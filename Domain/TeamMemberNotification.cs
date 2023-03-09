@@ -3,9 +3,9 @@ namespace Domain;
 public class TeamMemberNotification
 {
     public readonly TeamMember TeamMember;
-    public readonly String Message;
+    public readonly string Message;
 
-    public TeamMemberNotification(TeamMember teamMember, String message)
+    public TeamMemberNotification(TeamMember teamMember, string message)
     {
         TeamMember = teamMember;
         Message = message;
