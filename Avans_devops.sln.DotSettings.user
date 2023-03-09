@@ -2,5 +2,6 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e8033585_002D1d97_002D4ed3_002D9164_002D1526ee7013db/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="NotifyScrumMasterViaEmail" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.TeamMemberNotifierTest.NotifyScrumMasterViaEmail&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.TeamMemberNotifierTest.UnsubscribeEmailNotifier&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

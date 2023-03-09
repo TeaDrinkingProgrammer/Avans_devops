@@ -17,4 +17,19 @@ public class TeamMemberNotifierTest
 
         writer.Received().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Hello scrummaster!");
     }
+    [Fact]
+    public void UnsubscribeEmailNotifier()
+    {
+        var writer = Substitute.For<IWriter>();
+
+        var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+            new TeamMember("Jan de Productowner"));
+        var emailNotifier = new EmailNotifier("jandescrumman@gmail.com", writer);
+        var unsubscriber = sprint.ScrumMaster.Subscribe(emailNotifier);
+        unsubscriber.Dispose();
+        
+        sprint.ScrumMaster.Notify(new TeamMemberNotification(sprint.ScrumMaster, "Hello scrummaster!"));
+        
+        writer.DidNotReceive().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Hello scrummaster!");
+    }
 }

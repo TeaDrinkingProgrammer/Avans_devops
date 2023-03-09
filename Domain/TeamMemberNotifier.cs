@@ -17,7 +17,7 @@ public class TeamMemberNotifier: IObservable<TeamMemberNotification>
         return new Unsubscriber(_observers, observer);
     }
     
-    private class Unsubscriber : IDisposable
+    private sealed class Unsubscriber : IDisposable
     {
         private readonly IList<IObserver<TeamMemberNotification>> _observers;
         private readonly IObserver<TeamMemberNotification>? _observer;

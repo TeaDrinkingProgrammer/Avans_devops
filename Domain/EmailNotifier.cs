@@ -12,15 +12,16 @@ public class EmailNotifier : IObserver<TeamMemberNotification>
     }
     public void OnCompleted()
     {
+        throw new NotImplementedException();
     }
 
     public void OnError(Exception error)
     {
+        throw new NotImplementedException();
     }
 
     public void OnNext(TeamMemberNotification notification)
     {
-        Console.WriteLine();
         _writer.WriteLine($"To: {notification.TeamMember.Name} <{_email}>: {notification.Message}");
     }
 }

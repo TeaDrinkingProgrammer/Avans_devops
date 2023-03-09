@@ -16,8 +16,8 @@ public class TeamMember
         _notifier.Notify(notification);
     }
 
-    public void Subscribe(IObserver<TeamMemberNotification> observer)
+    public IDisposable Subscribe(IObserver<TeamMemberNotification> observer)
     {
-        _notifier.Subscribe(observer);
+        return _notifier.Subscribe(observer);
     }
 }
