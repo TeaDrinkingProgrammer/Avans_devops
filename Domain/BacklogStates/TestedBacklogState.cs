@@ -4,10 +4,14 @@ namespace Domain;
 
 public class TestedBacklogState : BacklogState
 {
-    public TestedBacklogState(IWriter writer, BacklogItem backlogItem) : base(writer, backlogItem, "Todo")
+    public TestedBacklogState(IWriter writer, BacklogItem backlogItem) : base(writer, backlogItem, "Tested")
     {
     }
 
+    public override void SetState()
+    {
+        // Doesn't do anything
+    }
     public override void ToTodo()
     {
         throw new IllegalStateAdvanceException();

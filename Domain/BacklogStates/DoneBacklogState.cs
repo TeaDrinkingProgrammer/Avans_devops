@@ -4,14 +4,18 @@ namespace Domain;
 
 public class DoneBacklogState : BacklogState
 {
-    public DoneBacklogState(IWriter writer, BacklogItem backlogItem) : base(writer, backlogItem, "Todo")
+    public DoneBacklogState(IWriter writer, BacklogItem backlogItem) : base(writer, backlogItem, "Done")
     {
+    }
+    public override void SetState()
+    {
+        // Doesn't do anything
     }
 
     public override void ToTodo()
     {
+        _backlogItem.Sprint.ScrumMaster.Notify($"Backlogitem {_backlogItem.Name} has been moved from Done to Todo");
         AdvanceState(_backlogItem.TodoBacklogState);
-        //TODO SCRUMmasternotificatie
     }
 
     public override void ToDoing()

@@ -4,15 +4,18 @@ namespace Domain;
 
 public class ReadyForTestingBacklogState : BacklogState
 {
-    public ReadyForTestingBacklogState(IWriter writer, BacklogItem backlogItem) : base(writer, backlogItem, "Todo")
+    public ReadyForTestingBacklogState(IWriter writer, BacklogItem backlogItem) : base(writer, backlogItem, "Ready")
     {
-        //TODO send notification to tester
+    }
+    public override void SetState()
+    {
+        _backlogItem.Sprint.Tester.Notify($"Backlogitem {_backlogItem.Name} is ready for testing");
     }
 
     public override void ToTodo()
     {
+        _backlogItem.Sprint.ScrumMaster.Notify($"Backlogitem {_backlogItem.Name} has been moved from Ready For Testing to Todo");
         AdvanceState(_backlogItem.TodoBacklogState);
-        //TODO notification to SCRUMmaster
     }
 
     public override void ToDoing()

@@ -2,8 +2,21 @@ namespace Domain;
 
 public class BacklogItem
 {
+    public string Name { get; set; }
     private IWriter Writer;
-    public BacklogState State { get; set; }
+
+    public Sprint Sprint { get; set; }
+
+    private BacklogState _state;
+    public BacklogState State
+    {
+        get => _state;
+        set
+        {
+            value.SetState();
+            _state = value;
+        }
+    }
     public TodoBacklogState TodoBacklogState { get; set; }
     public DoingBacklogState DoingBacklogState { get; set; }
     public ReadyForTestingBacklogState ReadyForTestingBacklogState { get; set; }
@@ -12,16 +25,18 @@ public class BacklogItem
     
     public DoneBacklogState DoneBacklogState { get; set; }
 
-    public BacklogItem(IWriter writer)
+    public BacklogItem(string name, IWriter writer, Sprint sprint)
     {
+        Name = name;
         Writer = writer;
+        Sprint = sprint;
         TodoBacklogState = new TodoBacklogState(Writer, this);
         DoingBacklogState = new DoingBacklogState(Writer, this);
         ReadyForTestingBacklogState = new ReadyForTestingBacklogState(Writer, this);
         TestingBacklogState = new TestingBacklogState(Writer, this);
         TestedBacklogState = new TestedBacklogState(Writer, this);
         DoneBacklogState = new DoneBacklogState(Writer, this);
-        State = new TodoBacklogState(writer, this);
+        State = TodoBacklogState;
     }
 
     public void ToTodo()

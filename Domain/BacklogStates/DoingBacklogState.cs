@@ -8,6 +8,11 @@ public class DoingBacklogState : BacklogState
     {
     }
 
+    public override void SetState()
+    {
+        // Doesn't do anything
+    }
+
     public override void ToTodo()
     {
         throw new IllegalStateAdvanceException();
