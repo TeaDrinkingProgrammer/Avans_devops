@@ -11,9 +11,9 @@ public class TeamMember
         _notifier = new TeamMemberNotifier();
     }
 
-    public void Notify(TeamMemberNotification notification)
+    public void Notify(string message)
     {
-        _notifier.Notify(notification);
+        _notifier.Notify(new TeamMemberNotification(this, message));
     }
 
     public IDisposable Subscribe(IObserver<TeamMemberNotification> observer)

@@ -3,5 +3,11 @@
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.TeamMemberNotifierTest.NotifyScrumMasterViaEmail&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.TeamMemberNotifierTest.UnsubscribeEmailNotifier&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest.ScrumMasterShouldBeNotifiedWhenBacklogItemMovesFromDoneToTodo&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest.TesterShouldBeNotifiedWhenItemMovesToReadyForTesting&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest.ScrumMasterShouldBeNotifedWhenBacklogitemMovesFromReadyForTestingToTodo&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest.ScrumMasterShouldBeNotifiedWhenBacklogitemMovesFromReadyForTestingToTodo&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.TeamMemberNotifierTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
