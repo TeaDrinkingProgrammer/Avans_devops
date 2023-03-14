@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+
 namespace Domain.Exceptions;
 
 [Serializable]
@@ -17,4 +19,8 @@ public class IllegalStateAdvanceException : Exception
     {
     }
     
+    protected IllegalStateAdvanceException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+
+    }
 }
