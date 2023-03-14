@@ -1,5 +1,6 @@
 namespace Domain.Exceptions;
 
+[Serializable]
 public class IllegalStateAdvanceException : Exception
 {
     public IllegalStateAdvanceException()
