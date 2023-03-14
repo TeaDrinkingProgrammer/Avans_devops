@@ -3,7 +3,6 @@ namespace Domain;
 public class BacklogItem
 {
     public string Name { get; set; }
-    private IWriter Writer;
 
     public Sprint Sprint { get; set; }
 
@@ -28,15 +27,14 @@ public class BacklogItem
     public BacklogItem(string name, IWriter writer, Sprint sprint)
     {
         Name = name;
-        Writer = writer;
         Sprint = sprint;
-        TodoBacklogState = new TodoBacklogState(Writer, this);
-        DoingBacklogState = new DoingBacklogState(Writer, this);
-        ReadyForTestingBacklogState = new ReadyForTestingBacklogState(Writer, this);
-        TestingBacklogState = new TestingBacklogState(Writer, this);
-        TestedBacklogState = new TestedBacklogState(Writer, this);
-        DoneBacklogState = new DoneBacklogState(Writer, this);
-        State = TodoBacklogState;
+        TodoBacklogState = new TodoBacklogState(writer, this);
+        DoingBacklogState = new DoingBacklogState(writer, this);
+        ReadyForTestingBacklogState = new ReadyForTestingBacklogState(writer, this);
+        TestingBacklogState = new TestingBacklogState(writer, this);
+        TestedBacklogState = new TestedBacklogState(writer, this);
+        DoneBacklogState = new DoneBacklogState(writer, this);
+        _state = TodoBacklogState;
     }
 
     public void ToTodo()
