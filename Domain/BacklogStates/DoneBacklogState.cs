@@ -9,7 +9,13 @@ public class DoneBacklogState : BacklogState
     }
     public override void SetState()
     {
-        // Doesn't do anything
+        foreach (var activity in _backlogItem.Activities)
+        {
+            if (activity.State.GetType() != typeof(DoneBacklogState))
+            {
+                throw new IllegalStateAdvanceException($"Cannot move backlogitem to Done: activity {activity.Name} is not done yet.");
+            }
+        }
     }
 
     public override void ToTodo()

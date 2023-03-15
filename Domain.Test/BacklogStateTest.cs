@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Domain.Exceptions;
 using NSubstitute;
 
@@ -14,7 +13,7 @@ public class BacklogStateTest
 
         var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
             new TeamMember("Jan de Productowner"));
-        var backlogItem = new BacklogItem("1", writer, sprint);
+        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         sprint.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
        
         backlogItem.ToDoing();
@@ -35,7 +34,7 @@ public class BacklogStateTest
 
         var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
             new TeamMember("Jan de Productowner"));
-        var backlogItem = new BacklogItem("1", writer, sprint);
+        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         
         sprint.Tester.Subscribe(new EmailNotifier("henkdetesterman@gmail.com", notificationWriter));
         
@@ -53,7 +52,7 @@ public class BacklogStateTest
 
         var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
             new TeamMember("Jan de Productowner"));
-        var backlogItem = new BacklogItem("1", writer, sprint);
+        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         
         sprint.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
         
@@ -71,7 +70,7 @@ public class BacklogStateTest
 
         var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
             new TeamMember("Jan de Productowner"));
-        var backlogItem = new BacklogItem("1", writer, sprint);
+        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         
         sprint.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
         
@@ -88,7 +87,7 @@ public class BacklogStateTest
 
         var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
             new TeamMember("Jan de Productowner"));
-        var backlogItem = new BacklogItem("1", writer, sprint);
+        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         
         sprint.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
         
@@ -107,7 +106,7 @@ public class BacklogStateTest
 
         var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
             new TeamMember("Jan de Productowner"));
-        var backlogItem = new BacklogItem("1", writer, sprint);
+        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         
         sprint.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
         
@@ -115,5 +114,27 @@ public class BacklogStateTest
             () => backlogItem.ToTodo());
 
         Assert.Equal("This backlog item is already in Todo", ex.Message);
+    }    
+    [Fact]
+    public void BacklogItemShouldThrowExceptionWhenItMovesToDoneAndAnActivityIsNotDoneYet()
+    {
+        var writer = Substitute.For<IWriter>();
+
+        var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+            new TeamMember("Jan de Productowner"));
+        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        var activity = new BacklogItem("2", writer, sprint, new TeamMember("Henk de steen"));
+        backlogItem.Activities.Add(activity);
+        
+        backlogItem.ToDoing();
+        backlogItem.ToReadyForTesting();
+        backlogItem.ToTesting();
+        backlogItem.ToTested();
+
+        var ex = Assert.Throws<IllegalStateAdvanceException>(
+            () => backlogItem.ToDone());
+
+        Assert.Equal("Cannot move backlogitem to Done: activity 2 is not done yet.", ex.Message);
     }
+    
 }
