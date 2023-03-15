@@ -12,12 +12,12 @@ public class EmailNotifier : IObserver<TeamMemberNotification>
     }
     public void OnCompleted()
     {
-        throw new NotImplementedException();
+        // Not Implemented
     }
 
     public void OnError(Exception error)
     {
-        throw new NotImplementedException();
+        // Not Implemented
     }
 
     public void OnNext(TeamMemberNotification notification)
