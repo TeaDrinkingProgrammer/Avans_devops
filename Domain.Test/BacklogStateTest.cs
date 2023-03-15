@@ -100,7 +100,7 @@ public class BacklogStateTest
     }
     
     [Fact]
-    public void BacklogItemShouldThrowExceptionWhenItMovesFromDoneToDoing()
+    public void BacklogItemShouldThrowExceptionWhenItGoesFromTodoToTodo()
     {
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
@@ -111,12 +111,9 @@ public class BacklogStateTest
         
         sprint.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
         
-        backlogItem.ToDoing();
-        backlogItem.ToReadyForTesting();
-        backlogItem.ToTesting();
-        backlogItem.ToTested();
-        backlogItem.ToDone();
-        
-        Assert.Throws<IllegalStateAdvanceException>(() => backlogItem.ToDoing());
+        IllegalStateAdvanceException ex = Assert.Throws<IllegalStateAdvanceException>(
+            () => backlogItem.ToTodo());
+
+        Assert.Equal("This backlog item is already in Todo", ex.Message);
     }
 }
