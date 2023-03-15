@@ -3,8 +3,10 @@ namespace Domain;
 public class BacklogItem
 {
     public string Name { get; set; }
+    public TeamMember TeamMember { get; set; }
+    public ICollection<BacklogItem> Activities { get; set; } = new List<BacklogItem>();
 
-    public Sprint Sprint { get; set; }
+    internal Sprint Sprint { get; set; }
 
     private BacklogState _state;
     public BacklogState State
@@ -24,10 +26,11 @@ public class BacklogItem
     
     public DoneBacklogState DoneBacklogState { get; set; }
 
-    public BacklogItem(string name, IWriter writer, Sprint sprint)
+    public BacklogItem(string name, IWriter writer, Sprint sprint, TeamMember teamMember)
     {
         Name = name;
-        Sprint = sprint;
+        sprint.AddBacklogItem(this);
+        TeamMember = teamMember;
         TodoBacklogState = new TodoBacklogState(writer, this);
         DoingBacklogState = new DoingBacklogState(writer, this);
         ReadyForTestingBacklogState = new ReadyForTestingBacklogState(writer, this);
