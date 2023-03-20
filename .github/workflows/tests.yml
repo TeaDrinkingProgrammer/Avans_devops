@@ -38,11 +38,7 @@
 
 name: .NET Testing
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [workflow_call]
 
 jobs:
 
