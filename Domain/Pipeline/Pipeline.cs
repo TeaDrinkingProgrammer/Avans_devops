@@ -2,7 +2,7 @@
 {
     public class Pipeline
     {
-        public readonly List<Task> tasks;
+        public List<Task> tasks { get; set; }
         public string name;
 
         public Pipeline(string name)
