@@ -1,16 +1,19 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e8033585_002D1d97_002D4ed3_002D9164_002D1526ee7013db/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="NotifyScrumMasterViaEmail" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.TeamMemberNotifierTest.NotifyScrumMasterViaEmail&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.TeamMemberNotifierTest.UnsubscribeEmailNotifier&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest.ScrumMasterShouldBeNotifiedWhenBacklogItemMovesFromDoneToTodo&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest.TesterShouldBeNotifiedWhenItemMovesToReadyForTesting&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest.ScrumMasterShouldBeNotifedWhenBacklogitemMovesFromReadyForTestingToTodo&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest.ScrumMasterShouldBeNotifiedWhenBacklogitemMovesFromReadyForTestingToTodo&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.TeamMemberNotifierTest&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.PipelineBuilderTest&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.PipelineTest.PipelineShouldExecuteSourceActions&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.DeploymentPipelineTest&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e8033585_002D1d97_002D4ed3_002D9164_002D1526ee7013db/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="NotifyScrumMasterViaEmail" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.TeamMemberNotifierTest.NotifyScrumMasterViaEmail&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.TeamMemberNotifierTest.UnsubscribeEmailNotifier&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest.ScrumMasterShouldBeNotifiedWhenBacklogItemMovesFromDoneToTodo&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest.TesterShouldBeNotifiedWhenItemMovesToReadyForTesting&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest.ScrumMasterShouldBeNotifedWhenBacklogitemMovesFromReadyForTestingToTodo&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest.ScrumMasterShouldBeNotifiedWhenBacklogitemMovesFromReadyForTestingToTodo&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.TeamMemberNotifierTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.BacklogStateTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.SprintStateTest.SprintShouldHaveReviewStateAfterCallingReviewSprintOnFinishedState&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.SprintStateTest.SprintShouldThrowIllegalSprintAdvanceExceptionAfterCallingReviewSprintOnFinishedStateWithoutSprintReview&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.SprintStateTest.SprintShouldThrowIllegalStateAdvanceExceptionAfterCallingReviewSprintOnFinishedStateWithoutSprintReview&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.SprintStateTest.SprintShouldHaveReleaseStateAfterCallingReleaseOnFinishedStateOnAReleaseSprint&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.SprintStateTest.ScrumMasterAndOwnerShouldGetNotificationWhenSprintHasBeenCancelled&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4B6116E8-7089-4EC0-9AF4-4748CA2056D5::net7.0::Domain.Test.SprintStateTest.ScrumMasterAndOwnerShouldGetNotificationWhenSprintHasBeenReleased&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

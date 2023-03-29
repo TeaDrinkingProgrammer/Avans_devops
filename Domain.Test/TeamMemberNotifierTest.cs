@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Domain.Sprints;
 using NSubstitute;
 
 namespace Domain.Test;
@@ -10,10 +11,13 @@ public class TeamMemberNotifierTest
     {
         var writer = Substitute.For<IWriter>();
 
-        var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
             new TeamMember("Jan de Productowner"));
-        sprint.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", writer));
-        sprint.ScrumMaster.Notify("Hello scrummaster!");
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReleaseSprint(project);
+        
+        project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", writer));
+        project.ScrumMaster.Notify("Hello scrummaster!");
 
         writer.Received().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Hello scrummaster!");
     }
@@ -22,13 +26,16 @@ public class TeamMemberNotifierTest
     {
         var writer = Substitute.For<IWriter>();
 
-        var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
             new TeamMember("Jan de Productowner"));
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReleaseSprint(project);
+        
         var emailNotifier = new EmailNotifier("jandescrumman@gmail.com", writer);
-        var unsubscriber = sprint.ScrumMaster.Subscribe(emailNotifier);
+        var unsubscriber = project.ScrumMaster.Subscribe(emailNotifier);
         unsubscriber.Dispose();
         
-        sprint.ScrumMaster.Notify("Hello scrummaster!");
+        project.ScrumMaster.Notify("Hello scrummaster!");
         
         writer.DidNotReceive().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Hello scrummaster!");
     }

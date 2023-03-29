@@ -10,7 +10,7 @@ public class DoingBacklogState : BacklogState
 
     public override void SetState()
     {
-        _backlogItem.Sprint.ScrumMaster.Notify($"Backlogitem {_backlogItem.Name} has been moved to Doing");
+        _backlogItem.Sprint.Project.ScrumMaster.Notify($"Backlogitem {_backlogItem.Name} has been moved to Doing");
     }
 
     public override void ToTodo()
