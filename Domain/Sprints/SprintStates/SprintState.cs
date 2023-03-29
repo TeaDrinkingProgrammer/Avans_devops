@@ -4,9 +4,8 @@ namespace Domain.Sprints.SprintStates;
 
 public abstract class SprintState
 {
-    public Sprint Sprint { get; }
-    public string StateName { get; }
-    public SprintState(Sprint sprint)
+    protected Sprint Sprint { get; }
+    protected SprintState(Sprint sprint)
     {
         Sprint = sprint;
     }

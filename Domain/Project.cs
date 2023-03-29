@@ -2,7 +2,7 @@ namespace Domain;
 
 public class Project
 {
-    private string _title;
+    private readonly string _title;
 
     public TeamMember ScrumMaster { get; set; }
     public TeamMember Tester { get; set; }

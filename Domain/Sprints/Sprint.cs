@@ -4,7 +4,7 @@ namespace Domain.Sprints;
 
 public abstract class Sprint
 {
-    private DateOnly _date;
+    private readonly DateOnly _date;
 
     public Project Project { get; }
 

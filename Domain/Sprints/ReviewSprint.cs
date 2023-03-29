@@ -4,7 +4,7 @@ namespace Domain.Sprints;
 
 public class ReviewSprint : Sprint
 {
-    public string SprintReview { get; set; }
+    public string? SprintReview { get; set; }
     public ReviewState ReviewState { get;}
     public ReviewSprint(DateOnly date, Project project) : base(date, project)
     {
