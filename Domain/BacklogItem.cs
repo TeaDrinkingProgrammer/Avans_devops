@@ -1,5 +1,3 @@
-using Domain.Sprints;
-
 namespace Domain;
 
 public class BacklogItem
