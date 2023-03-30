@@ -13,11 +13,13 @@ public class ReviewSprint : Sprint
 
     public override void AddBacklogItem(BacklogItem backlogItem)
     {
+        //TODO cannot add backlogitems when pipeline is running
         throw new NotImplementedException();
     }
 
     public override void RemoveBacklogItem(BacklogItem backlogItem)
     {
+        //TODO cannot add backlogitems when pipeline is running
         throw new NotImplementedException();
     }
 

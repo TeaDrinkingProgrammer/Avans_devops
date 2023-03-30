@@ -34,7 +34,6 @@ public class ReviewState : SprintState
 
     public override void CancelSprint()
     {
-        //TODO can a sprint be cancelled after it has been released?
         throw new IllegalStateAdvanceException();
     }
 
