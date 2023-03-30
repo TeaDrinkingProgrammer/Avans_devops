@@ -72,8 +72,8 @@ public class SprintStateTest
         var scrumMasterNotificationService = new NotificationService(new EmailService(scrumMasterWriter), new SlackService(scrumMasterWriter));
         var productOwnerNotificationService = new NotificationService(new EmailService(productOwnerWriter), new SlackService(productOwnerWriter));
 
-        project.SubscribeToScrumMaster(scrumMasterNotificationService);
-        project.SubscribeToProductOwner(productOwnerNotificationService);
+        project.ScrumMaster.Subscribe(scrumMasterNotificationService);
+        project.ProductOwner.Subscribe(productOwnerNotificationService);
         //Act
         sprint.CancelSprint();
         
@@ -96,8 +96,8 @@ public class SprintStateTest
         var scrumMasterNotificationService = new NotificationService(new EmailService(scrumMasterWriter), new SlackService(scrumMasterWriter));
         var productOwnerNotificationService = new NotificationService(new EmailService(productOwnerWriter), new SlackService(productOwnerWriter));
         
-        project.SubscribeToScrumMaster(scrumMasterNotificationService);
-        project.SubscribeToProductOwner(productOwnerNotificationService);
+        project.ScrumMaster.Subscribe(scrumMasterNotificationService);
+        project.ProductOwner.Subscribe(productOwnerNotificationService);
         
         sprint.ToNextState();
         sprint.ToNextState();

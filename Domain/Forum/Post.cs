@@ -3,11 +3,11 @@ namespace Domain.Forum;
 public abstract class Post
 {
     public string Content { get; }
-    private TeamMember _author { get; }
+    public TeamMember Author { get; }
 
     public Post(string content, TeamMember author)
     {
         Content = content;
-        _author = author;
+        Author = author;
     }
 }

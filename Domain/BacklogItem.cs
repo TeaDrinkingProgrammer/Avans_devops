@@ -1,3 +1,4 @@
+using Domain.Forum;
 using Domain.Notifier;
 using Domain.Notifier.Events;
 using Domain.Sprints;
@@ -14,6 +15,7 @@ public class BacklogItem
     public Sprint Sprint { get; set; }
     
     TeamMemberNotifier _notifier;
+    public Discussion Discussion { get; set; }
 
     private BacklogState _state;
     public BacklogState State
@@ -39,12 +41,16 @@ public class BacklogItem
         _notifier = new TeamMemberNotifier();
         sprint.AddBacklogItem(this);
         Developer = developer;
+        
         TodoBacklogState = new TodoBacklogState(writer, this);
         DoingBacklogState = new DoingBacklogState(writer, this);
         ReadyForTestingBacklogState = new ReadyForTestingBacklogState(writer, this);
         TestingBacklogState = new TestingBacklogState(writer, this);
         TestedBacklogState = new TestedBacklogState(writer, this);
         DoneBacklogState = new DoneBacklogState(writer, this);
+        
+        Discussion = new Discussion("Backlog: " + name);
+        
         _state = TodoBacklogState;
     }
     

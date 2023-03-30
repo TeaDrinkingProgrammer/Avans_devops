@@ -21,7 +21,7 @@ public class DoneBacklogState : BacklogState
 
     public override void ToTodo()
     {
-        _backlogItem.Sprint.Project.NotifyScrumMaster($"Backlogitem {_backlogItem.Name} has been moved from Done to Todo");
+        _backlogItem.Sprint.Project.ScrumMaster.Notify($"Backlogitem {_backlogItem.Name} has been moved from Done to Todo");
         AdvanceState(_backlogItem.TodoBacklogState);
         _backlogItem.Discussion.Open();
     }

@@ -23,7 +23,7 @@ public class BacklogStateTest
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"));
         
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
-        project.SubscribeToScrumMaster(notificationService);
+        project.ScrumMaster.Subscribe(notificationService);
        
         backlogItem.ToDoing();
         backlogItem.ToReadyForTesting();
@@ -49,7 +49,7 @@ public class BacklogStateTest
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
-        backlogItem.Sprint.Project.SubscribeToTester(notificationService);
+        backlogItem.Sprint.Project.Tester.Subscribe(notificationService);
         
         backlogItem.ToDoing();
         backlogItem.ToReadyForTesting();
@@ -71,7 +71,7 @@ public class BacklogStateTest
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
-        project.SubscribeToScrumMaster(notificationService);
+        project.ScrumMaster.Subscribe(notificationService);
         
         backlogItem.ToDoing();
         backlogItem.ToReadyForTesting();
@@ -93,7 +93,7 @@ public class BacklogStateTest
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
-        project.SubscribeToScrumMaster(notificationService);
+        project.ScrumMaster.Subscribe(notificationService);
         
         backlogItem.ToDoing();
 
