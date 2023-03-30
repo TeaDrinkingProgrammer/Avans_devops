@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.JavaScript;
+using Domain.Forum;
 using Domain.Sprints;
 
 namespace Domain;
@@ -7,8 +9,8 @@ public class BacklogItem
     public string Name { get; set; }
     public TeamMember TeamMember { get; set; }
     public ICollection<BacklogItem> Activities { get; set; } = new List<BacklogItem>();
-
     internal Sprint Sprint { get; set; }
+    public Discussion Discussion { get; }
 
     private BacklogState _state;
     public BacklogState State
@@ -39,6 +41,8 @@ public class BacklogItem
         TestingBacklogState = new TestingBacklogState(writer, this);
         TestedBacklogState = new TestedBacklogState(writer, this);
         DoneBacklogState = new DoneBacklogState(writer, this);
+        
+        Discussion = new Discussion();
         _state = TodoBacklogState;
     }
 

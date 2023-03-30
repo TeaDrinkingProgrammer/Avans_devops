@@ -18,6 +18,8 @@ public class BacklogStateTest
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        sprint.AddBacklogItem(backlogItem);
+        
         project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
        
         backlogItem.ToDoing();
@@ -42,7 +44,8 @@ public class BacklogStateTest
         var sprint = sprintFactory.NewReleaseSprint(project);
 
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
-            
+        sprint.AddBacklogItem(backlogItem);
+        
         project.Tester.Subscribe(new EmailNotifier("henkdetesterman@gmail.com", notificationWriter));
         
         backlogItem.ToDoing();
@@ -63,6 +66,7 @@ public class BacklogStateTest
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        sprint.AddBacklogItem(backlogItem);
         
         project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
         
@@ -84,6 +88,7 @@ public class BacklogStateTest
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        sprint.AddBacklogItem(backlogItem);
         
         project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
         
@@ -104,6 +109,7 @@ public class BacklogStateTest
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        sprint.AddBacklogItem(backlogItem);
         
         project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
         
@@ -126,6 +132,7 @@ public class BacklogStateTest
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        sprint.AddBacklogItem(backlogItem);
         
         project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
         
@@ -146,6 +153,8 @@ public class BacklogStateTest
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         var activity = new BacklogItem("2", writer, sprint, new TeamMember("Henk de steen"));
+        
+        sprint.AddBacklogItem(backlogItem);
         backlogItem.Activities.Add(activity);
         
         backlogItem.ToDoing();
