@@ -18,11 +18,12 @@ public class TeamMemberNotifierTest
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var notificationService = new NotificationService(new EmailService(writer), new SlackService(writer));
-        project.SubscribeToScrumMaster(notificationService);
-        project.NotifyScrumMaster("Hello scrummaster!");
+        project.ScrumMaster.Subscribe(notificationService);
+        project.ScrumMaster.Notify("Hello scrummaster!");
 
         writer.Received().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Hello scrummaster!");
     }
+    
     [Fact]
     public void UnsubscribeEmailNotifier()
     {
@@ -34,10 +35,10 @@ public class TeamMemberNotifierTest
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var notificationService = new NotificationService(new EmailService(writer), new SlackService(writer));
-        var unsubscriber = project.SubscribeToScrumMaster(notificationService);
+        var unsubscriber = project.ScrumMaster.Subscribe(notificationService);
         unsubscriber.Dispose();
         
-        project.NotifyScrumMaster("Hello scrummaster!");
+        project.ScrumMaster.Notify("Hello scrummaster!");
         
         writer.DidNotReceive().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Hello scrummaster!");
     }

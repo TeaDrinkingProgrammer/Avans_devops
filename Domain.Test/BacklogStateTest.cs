@@ -23,7 +23,9 @@ public class BacklogStateTest
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"));
         
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
-        project.SubscribeToScrumMaster(notificationService);
+        sprint.AddBacklogItem(backlogItem);
+        
+        project.ScrumMaster.Subscribe(notificationService);
        
         backlogItem.ToDoing();
         backlogItem.ToReadyForTesting();
@@ -47,9 +49,10 @@ public class BacklogStateTest
         var sprint = sprintFactory.NewReleaseSprint(project);
 
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        sprint.AddBacklogItem(backlogItem);
         
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
-        backlogItem.Sprint.Project.SubscribeToTester(notificationService);
+        backlogItem.Sprint.Project.Tester.Subscribe(notificationService);
         
         backlogItem.ToDoing();
         backlogItem.ToReadyForTesting();
@@ -69,9 +72,10 @@ public class BacklogStateTest
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        sprint.AddBacklogItem(backlogItem);
         
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
-        project.SubscribeToScrumMaster(notificationService);
+        project.ScrumMaster.Subscribe(notificationService);
         
         backlogItem.ToDoing();
         backlogItem.ToReadyForTesting();
@@ -91,9 +95,10 @@ public class BacklogStateTest
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        sprint.AddBacklogItem(backlogItem);
         
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
-        project.SubscribeToScrumMaster(notificationService);
+        project.ScrumMaster.Subscribe(notificationService);
         
         backlogItem.ToDoing();
 
@@ -112,6 +117,7 @@ public class BacklogStateTest
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        sprint.AddBacklogItem(backlogItem);
         
         
         backlogItem.ToDoing();
@@ -132,7 +138,8 @@ public class BacklogStateTest
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
-
+        sprint.AddBacklogItem(backlogItem);
+        
         IllegalStateAdvanceException ex = Assert.Throws<IllegalStateAdvanceException>(
             () => backlogItem.ToTodo());
 
@@ -153,6 +160,8 @@ public class BacklogStateTest
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"), 
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"));
         var activity = new BacklogItem("2", writer, sprint, new TeamMember("Henk de steen"));
+        
+        sprint.AddBacklogItem(backlogItem);
         backlogItem.Activities.Add(activity);
         
         backlogItem.ToDoing();

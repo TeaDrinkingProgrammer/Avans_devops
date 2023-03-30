@@ -1,5 +1,4 @@
-using Domain.Notifier;
-using Domain.Notifier.Events;
+using Domain.Forum;
 using Domain.Sprints;
 
 namespace Domain;
@@ -13,7 +12,7 @@ public class BacklogItem
 
     public Sprint Sprint { get; set; }
     
-    TeamMemberNotifier _notifier;
+    public Discussion Discussion { get; }
 
     private BacklogState _state;
     public BacklogState State
@@ -36,26 +35,19 @@ public class BacklogItem
     public BacklogItem(string name, IWriter writer, Sprint sprint, TeamMember developer, TeamMember? tester = null)
     {
         Name = name;
-        _notifier = new TeamMemberNotifier();
         sprint.AddBacklogItem(this);
         Developer = developer;
+        
         TodoBacklogState = new TodoBacklogState(writer, this);
         DoingBacklogState = new DoingBacklogState(writer, this);
         ReadyForTestingBacklogState = new ReadyForTestingBacklogState(writer, this);
         TestingBacklogState = new TestingBacklogState(writer, this);
         TestedBacklogState = new TestedBacklogState(writer, this);
         DoneBacklogState = new DoneBacklogState(writer, this);
+        
+        Discussion = new Discussion("Backlog: " + name);
+        
         _state = TodoBacklogState;
-    }
-    
-    public void NotifyDeveloper(string message)
-    {
-        _notifier.Notify(new Notification(Developer, message));
-    }
-
-    public IDisposable Subscribe(IObserver<Notification> observer)
-    {
-        return _notifier.Subscribe(observer);
     }
 
     public void ToTodo()

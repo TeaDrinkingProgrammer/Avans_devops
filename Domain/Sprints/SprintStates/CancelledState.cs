@@ -35,7 +35,7 @@ public class CancelledState : SprintState
 
     public override void setState()
     {
-        Sprint.Project.NotifyScrumMaster("Sprint has been cancelled");
-        Sprint.Project.NotifyProductOwner("Sprint has been cancelled");
+        Sprint.Project.ScrumMaster.Notify("Sprint has been cancelled");
+        Sprint.Project.ProductOwner.Notify("Sprint has been cancelled");
     }
 }

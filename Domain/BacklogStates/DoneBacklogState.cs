@@ -16,12 +16,14 @@ public class DoneBacklogState : BacklogState
                 throw new IllegalStateAdvanceException($"Cannot move backlogitem to Done: activity {activity.Name} is not done yet.");
             }
         }
+        _backlogItem.Discussion.Close();
     }
 
     public override void ToTodo()
     {
-        _backlogItem.Sprint.Project.NotifyScrumMaster($"Backlogitem {_backlogItem.Name} has been moved from Done to Todo");
+        _backlogItem.Sprint.Project.ScrumMaster.Notify($"Backlogitem {_backlogItem.Name} has been moved from Done to Todo");
         AdvanceState(_backlogItem.TodoBacklogState);
+        _backlogItem.Discussion.Open();
     }
 
     public override void ToDoing()
