@@ -1,12 +1,18 @@
+using Domain.Notifier.Events;
+
 namespace Domain;
 
 public class BacklogItem
 {
     public string Name { get; set; }
-    public TeamMember TeamMember { get; set; }
+    public TeamMember Developer { get; set; }
+    
+    public TeamMember? Tester { get; set; }
     public ICollection<BacklogItem> Activities { get; set; } = new List<BacklogItem>();
 
     internal Sprint Sprint { get; set; }
+    
+    TeamMemberNotifier _notifier;
 
     private BacklogState _state;
     public BacklogState State
@@ -26,11 +32,13 @@ public class BacklogItem
     
     public DoneBacklogState DoneBacklogState { get; set; }
 
-    public BacklogItem(string name, IWriter writer, Sprint sprint, TeamMember teamMember)
+    public BacklogItem(string name, IWriter writer, Sprint sprint, TeamMember developer, TeamMember? tester = null)
     {
         Name = name;
+        _notifier = new TeamMemberNotifier();
         sprint.AddBacklogItem(this);
-        TeamMember = teamMember;
+        Developer = developer;
+        Tester = tester;
         TodoBacklogState = new TodoBacklogState(writer, this);
         DoingBacklogState = new DoingBacklogState(writer, this);
         ReadyForTestingBacklogState = new ReadyForTestingBacklogState(writer, this);
@@ -38,6 +46,21 @@ public class BacklogItem
         TestedBacklogState = new TestedBacklogState(writer, this);
         DoneBacklogState = new DoneBacklogState(writer, this);
         _state = TodoBacklogState;
+    }
+    
+    public void NotifyDeveloper(string message)
+    {
+        _notifier.Notify(new Notification(Developer, message, "email"));
+    }
+    
+    public void NotifyTester(string message)
+    {
+        if (Tester != null) _notifier.Notify(new Notification(Tester, message, "email"));
+    }
+    
+    public IDisposable Subscribe(IObserver<Notification> observer)
+    {
+        return _notifier.Subscribe(observer);
     }
 
     public void ToTodo()

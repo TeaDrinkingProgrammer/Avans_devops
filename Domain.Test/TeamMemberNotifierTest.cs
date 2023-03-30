@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Domain.Notifier;
 using NSubstitute;
 
 namespace Domain.Test;
@@ -10,10 +11,13 @@ public class TeamMemberNotifierTest
     {
         var writer = Substitute.For<IWriter>();
 
-        var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
-            new TeamMember("Jan de Productowner"));
-        sprint.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", writer));
-        sprint.ScrumMaster.Notify("Hello scrummaster!");
+        var sprint = new Sprint(
+            new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), 
+            new TeamMember("Henk de Testerman", "jandescrumman@gmail.com")
+            );
+        var notificationService = new NotificationService(new EmailService(writer), new SlackService(writer));
+        sprint.Subscribe(notificationService);
+        sprint.NotifyScrumMaster("Hello scrummaster!");
 
         writer.Received().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Hello scrummaster!");
     }
@@ -22,13 +26,15 @@ public class TeamMemberNotifierTest
     {
         var writer = Substitute.For<IWriter>();
 
-        var sprint = new Sprint(new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
-            new TeamMember("Jan de Productowner"));
-        var emailNotifier = new EmailNotifier("jandescrumman@gmail.com", writer);
-        var unsubscriber = sprint.ScrumMaster.Subscribe(emailNotifier);
+        var sprint = new Sprint(
+            new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), 
+            new TeamMember("Henk de Testerman", "jandescrumman@gmail.com")
+            );
+        var notificationService = new NotificationService(new EmailService(writer), new SlackService(writer));
+        var unsubscriber = sprint.Subscribe(notificationService);
         unsubscriber.Dispose();
         
-        sprint.ScrumMaster.Notify("Hello scrummaster!");
+        sprint.NotifyScrumMaster("Hello scrummaster!");
         
         writer.DidNotReceive().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Hello scrummaster!");
     }
