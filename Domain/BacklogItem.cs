@@ -1,6 +1,4 @@
 using Domain.Forum;
-using Domain.Notifier;
-using Domain.Notifier.Events;
 using Domain.Sprints;
 
 namespace Domain;
@@ -14,8 +12,7 @@ public class BacklogItem
 
     public Sprint Sprint { get; set; }
     
-    TeamMemberNotifier _notifier;
-    public Discussion Discussion { get; set; }
+    public Discussion Discussion { get; }
 
     private BacklogState _state;
     public BacklogState State
@@ -38,7 +35,6 @@ public class BacklogItem
     public BacklogItem(string name, IWriter writer, Sprint sprint, TeamMember developer, TeamMember? tester = null)
     {
         Name = name;
-        _notifier = new TeamMemberNotifier();
         sprint.AddBacklogItem(this);
         Developer = developer;
         
@@ -52,16 +48,6 @@ public class BacklogItem
         Discussion = new Discussion("Backlog: " + name);
         
         _state = TodoBacklogState;
-    }
-    
-    public void NotifyDeveloper(string message)
-    {
-        _notifier.Notify(new Notification(Developer, message));
-    }
-
-    public IDisposable Subscribe(IObserver<Notification> observer)
-    {
-        return _notifier.Subscribe(observer);
     }
 
     public void ToTodo()
