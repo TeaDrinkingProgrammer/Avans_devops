@@ -1,5 +1,6 @@
 using Domain.Exceptions;
 using Domain.Notifier;
+using Domain.Sprints;
 using NSubstitute;
 
 namespace Domain.Test;
@@ -11,13 +12,16 @@ public class BacklogStateTest
     {
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
+        
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+            new TeamMember("Jan de Productowner"));
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReleaseSprint(project);
 
-        var sprint = new Sprint(
-            new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), 
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var backlogItem = new BacklogItem("1", writer, sprint, 
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"), 
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"));
+        
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
         sprint.Subscribe(notificationService);
        
@@ -37,12 +41,13 @@ public class BacklogStateTest
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
 
-        var sprint = new Sprint(
-            new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), 
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var backlogItem = new BacklogItem("1", writer, sprint, 
-            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"), 
-            new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"));
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+            new TeamMember("Jan de Productowner"));
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReleaseSprint(project);
+
+        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
         backlogItem.Subscribe(notificationService);
         
@@ -58,12 +63,13 @@ public class BacklogStateTest
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
 
-        var sprint = new Sprint(
-            new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), 
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var backlogItem = new BacklogItem("1", writer, sprint, 
-            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"), 
-            new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"));
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+            new TeamMember("Jan de Productowner"));
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReleaseSprint(project);
+        
+        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
         sprint.Subscribe(notificationService);
         
@@ -79,12 +85,13 @@ public class BacklogStateTest
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
 
-        var sprint = new Sprint(
-            new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), 
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var backlogItem = new BacklogItem("1", writer, sprint, 
-            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"), 
-            new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"));
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+            new TeamMember("Jan de Productowner"));
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReleaseSprint(project);
+        
+        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
         sprint.Subscribe(notificationService);
         
@@ -99,12 +106,13 @@ public class BacklogStateTest
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
 
-        var sprint = new Sprint(
-            new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), 
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var backlogItem = new BacklogItem("1", writer, sprint, 
-            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"), 
-            new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"));
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+            new TeamMember("Jan de Productowner"));
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReleaseSprint(project);
+        
+        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
         sprint.Subscribe(notificationService);
         
@@ -121,12 +129,13 @@ public class BacklogStateTest
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
 
-        var sprint = new Sprint(
-            new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), 
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var backlogItem = new BacklogItem("1", writer, sprint, 
-            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"), 
-            new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"));
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+            new TeamMember("Jan de Productowner"));
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReleaseSprint(project);
+        
+        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        
         var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
         sprint.Subscribe(notificationService);
         
@@ -141,9 +150,11 @@ public class BacklogStateTest
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
 
-        var sprint = new Sprint(
+        var project = new Project("SO&A 2",
             new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), 
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReleaseSprint(project);
         var backlogItem = new BacklogItem("1", writer, sprint, 
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"), 
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"));

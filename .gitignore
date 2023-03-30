@@ -6,3 +6,4 @@ riderModule.iml
 .fake
 .vs
 .vscode
+*.DotSettings.user
