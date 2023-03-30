@@ -1,4 +1,5 @@
 using Domain.Exceptions;
+using Domain.Notifier;
 using Domain.Sprints;
 using NSubstitute;
 
@@ -7,18 +8,22 @@ namespace Domain.Test;
 public class BacklogStateTest
 {
     [Fact]
-    public void ScrumMasterShouldBeNotifiedWhenBacklogItemMovesFromDoneToTodo()
+    public void ScrumMasterShouldBeNotifiedByEmailWhenBacklogItemMovesFromDoneToTodo()
     {
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner"));
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
+
+        var backlogItem = new BacklogItem("1", writer, sprint, 
+            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"), 
+            new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"));
         
-        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
-        project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
+        var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
+        project.SubscribeToScrumMaster(notificationService);
        
         backlogItem.ToDoing();
         backlogItem.ToReadyForTesting();
@@ -36,14 +41,15 @@ public class BacklogStateTest
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
 
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner"));
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
 
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
-            
-        project.Tester.Subscribe(new EmailNotifier("henkdetesterman@gmail.com", notificationWriter));
+        
+        var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
+        backlogItem.Sprint.Project.SubscribeToTester(notificationService);
         
         backlogItem.ToDoing();
         backlogItem.ToReadyForTesting();
@@ -57,14 +63,15 @@ public class BacklogStateTest
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
 
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner"));
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         
-        project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
+        var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
+        project.SubscribeToScrumMaster(notificationService);
         
         backlogItem.ToDoing();
         backlogItem.ToReadyForTesting();
@@ -78,14 +85,15 @@ public class BacklogStateTest
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
 
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner"));
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         
-        project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
+        var notificationService = new NotificationService(new EmailService(notificationWriter), new SlackService(notificationWriter));
+        project.SubscribeToScrumMaster(notificationService);
         
         backlogItem.ToDoing();
 
@@ -98,14 +106,13 @@ public class BacklogStateTest
         var writer = Substitute.For<IWriter>();
         var notificationWriter = Substitute.For<IWriter>();
 
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner"));
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
         
-        project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
         
         backlogItem.ToDoing();
         backlogItem.ToReadyForTesting();
@@ -118,17 +125,14 @@ public class BacklogStateTest
     public void BacklogItemShouldThrowExceptionWhenItGoesFromTodoToTodo()
     {
         var writer = Substitute.For<IWriter>();
-        var notificationWriter = Substitute.For<IWriter>();
 
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner"));
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
-        
-        project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", notificationWriter));
-        
+
         IllegalStateAdvanceException ex = Assert.Throws<IllegalStateAdvanceException>(
             () => backlogItem.ToTodo());
 
@@ -139,12 +143,15 @@ public class BacklogStateTest
     {
         var writer = Substitute.For<IWriter>();
 
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
-            new TeamMember("Jan de Productowner"));
+        var project = new Project("SO&A 2",
+            new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
+            new TeamMember("Jan de Testerman", "jandetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
-        
-        var backlogItem = new BacklogItem("1", writer, sprint, new TeamMember("Linus Torvalds"));
+        var backlogItem = new BacklogItem("1", writer, sprint, 
+            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"), 
+            new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"));
         var activity = new BacklogItem("2", writer, sprint, new TeamMember("Henk de steen"));
         backlogItem.Activities.Add(activity);
         

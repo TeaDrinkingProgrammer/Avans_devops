@@ -1,5 +1,6 @@
 //Write an nunit boilerplate class
 using Domain.Exceptions;
+using Domain.Notifier;
 using Domain.Sprints;
 using Domain.Sprints.SprintStates;
 using NSubstitute;
@@ -12,8 +13,8 @@ public class SprintStateTest
     public void SprintShouldHaveReviewStateAfterCallingReviewSprintOnFinishedStateOnAReviewSprint()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
-                    new TeamMember("Jan de Productowner")); 
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+                    new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReviewSprint(project);
         sprint.ToNextState();
@@ -28,8 +29,8 @@ public class SprintStateTest
     public void SprintShouldThrowIllegalStateAdvanceExceptionAfterCallingReviewOnFinishedStateWithoutSprintReview()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
-            new TeamMember("Jan de Productowner")); 
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReviewSprint(project);
         sprint.ToNextState();
@@ -45,8 +46,8 @@ public class SprintStateTest
     public void SprintShouldHaveReleaseStateAfterCallingReleaseOnFinishedStateOnAReleaseSprint()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
-            new TeamMember("Jan de Productowner")); 
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         sprint.ToNextState();
@@ -63,14 +64,16 @@ public class SprintStateTest
         var scrumMasterWriter = Substitute.For<IWriter>();
         var productOwnerWriter = Substitute.For<IWriter>();
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
-            new TeamMember("Jan de Productowner")); 
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
-        project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", scrumMasterWriter));
-        project.ProductOwner.Subscribe(new EmailNotifier("jandeproductowner@gmail.com", productOwnerWriter));
-        
+        var scrumMasterNotificationService = new NotificationService(new EmailService(scrumMasterWriter), new SlackService(scrumMasterWriter));
+        var productOwnerNotificationService = new NotificationService(new EmailService(productOwnerWriter), new SlackService(productOwnerWriter));
+
+        project.SubscribeToScrumMaster(scrumMasterNotificationService);
+        project.SubscribeToProductOwner(productOwnerNotificationService);
         //Act
         sprint.CancelSprint();
         
@@ -85,13 +88,16 @@ public class SprintStateTest
         var scrumMasterWriter = Substitute.For<IWriter>();
         var productOwnerWriter = Substitute.For<IWriter>();
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
-            new TeamMember("Jan de Productowner")); 
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
-        project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", scrumMasterWriter));
-        project.ProductOwner.Subscribe(new EmailNotifier("jandeproductowner@gmail.com", productOwnerWriter));
+        var scrumMasterNotificationService = new NotificationService(new EmailService(scrumMasterWriter), new SlackService(scrumMasterWriter));
+        var productOwnerNotificationService = new NotificationService(new EmailService(productOwnerWriter), new SlackService(productOwnerWriter));
+        
+        project.SubscribeToScrumMaster(scrumMasterNotificationService);
+        project.SubscribeToProductOwner(productOwnerNotificationService);
         
         sprint.ToNextState();
         sprint.ToNextState();
