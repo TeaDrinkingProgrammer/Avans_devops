@@ -12,14 +12,14 @@ public class TeamMemberNotifierTest
     {
         var writer = Substitute.For<IWriter>();
 
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
-            new TeamMember("Jan de Productowner"));
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var notificationService = new NotificationService(new EmailService(writer), new SlackService(writer));
-        sprint.Subscribe(notificationService);
-        sprint.NotifyScrumMaster("Hello scrummaster!");
+        project.SubscribeToScrumMaster(notificationService);
+        project.NotifyScrumMaster("Hello scrummaster!");
 
         writer.Received().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Hello scrummaster!");
     }
@@ -28,16 +28,16 @@ public class TeamMemberNotifierTest
     {
         var writer = Substitute.For<IWriter>();
 
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
-            new TeamMember("Jan de Productowner"));
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
         var notificationService = new NotificationService(new EmailService(writer), new SlackService(writer));
-        var unsubscriber = sprint.Subscribe(notificationService);
+        var unsubscriber = project.SubscribeToScrumMaster(notificationService);
         unsubscriber.Dispose();
         
-        sprint.NotifyScrumMaster("Hello scrummaster!");
+        project.NotifyScrumMaster("Hello scrummaster!");
         
         writer.DidNotReceive().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Hello scrummaster!");
     }

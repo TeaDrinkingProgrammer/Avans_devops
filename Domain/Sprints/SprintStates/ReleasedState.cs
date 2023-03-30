@@ -32,14 +32,12 @@ public class ReleasedState : SprintState
 
     public override void CancelSprint()
     {
-        //TODO can a sprint be cancelled after it has been released?
         throw new IllegalStateAdvanceException();
     }
 
     public override void setState()
     {
-        //TODO id?
-        Sprint.Project.ScrumMaster.Notify("Sprint has been released");
-        Sprint.Project.ProductOwner.Notify("Sprint has been released");
+        Sprint.Project.NotifyScrumMaster("Sprint has been released");
+        Sprint.Project.NotifyProductOwner("Sprint has been released");
     }
 }

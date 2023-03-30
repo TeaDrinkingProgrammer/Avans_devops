@@ -1,4 +1,6 @@
+using Domain.Notifier;
 using Domain.Notifier.Events;
+using Domain.Sprints;
 
 namespace Domain;
 
@@ -7,10 +9,9 @@ public class BacklogItem
     public string Name { get; set; }
     public TeamMember Developer { get; set; }
     
-    public TeamMember? Tester { get; set; }
     public ICollection<BacklogItem> Activities { get; set; } = new List<BacklogItem>();
 
-    internal Sprint Sprint { get; set; }
+    public Sprint Sprint { get; set; }
     
     TeamMemberNotifier _notifier;
 
@@ -38,7 +39,6 @@ public class BacklogItem
         _notifier = new TeamMemberNotifier();
         sprint.AddBacklogItem(this);
         Developer = developer;
-        Tester = tester;
         TodoBacklogState = new TodoBacklogState(writer, this);
         DoingBacklogState = new DoingBacklogState(writer, this);
         ReadyForTestingBacklogState = new ReadyForTestingBacklogState(writer, this);
@@ -50,14 +50,9 @@ public class BacklogItem
     
     public void NotifyDeveloper(string message)
     {
-        _notifier.Notify(new Notification(Developer, message, "email"));
+        _notifier.Notify(new Notification(Developer, message));
     }
-    
-    public void NotifyTester(string message)
-    {
-        if (Tester != null) _notifier.Notify(new Notification(Tester, message, "email"));
-    }
-    
+
     public IDisposable Subscribe(IObserver<Notification> observer)
     {
         return _notifier.Subscribe(observer);

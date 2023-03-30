@@ -25,20 +25,10 @@ public class NotificationService : IObserver<Notification>
 
     public void OnNext(Notification notification)
     {
-        switch (notification.Type)
-        {
-            case "email":
-            {
-                if (notification.TeamMember.Email != null)
-                    _emailService.Send($"{notification.TeamMember.Name} <{notification.TeamMember.Email}>", notification.Message);
-                break;
-            }
-            case "slack":
-            {
-                if (notification.TeamMember.SlackHandle != null)
-                    _slackService.Send(notification.TeamMember.SlackHandle, notification.Message);
-                break;
-            }
-        }
+        if (notification.TeamMember.Email != null)
+                _emailService.Send($"{notification.TeamMember.Name} <{notification.TeamMember.Email}>", notification.Message);
+
+        if (notification.TeamMember.SlackHandle != null)
+            _slackService.Send(notification.TeamMember.SlackHandle, notification.Message);
     }
 }
