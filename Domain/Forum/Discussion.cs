@@ -6,7 +6,7 @@ namespace Domain.Forum;
 
 public class Discussion
 {
-    private string _title;
+    private readonly string _title;
     private bool _isClosed { get; set; }
     public List<Reply> Replies { get; }= new();
 
