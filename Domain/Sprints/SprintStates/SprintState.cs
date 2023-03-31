@@ -9,17 +9,10 @@ public abstract class SprintState
     {
         Sprint = sprint;
     }
-    public void AddBacklogItem(BacklogItem backlogItem)
-    {
-        if (Sprint.BacklogItems.Contains(backlogItem)) return;
-        
-        Sprint.BacklogItems.Add(backlogItem);
-        backlogItem.Sprint = Sprint;
-    }
-    public void RemoveBacklogItem(BacklogItem backlogItem)
-    {
-        Sprint.BacklogItems.Remove(backlogItem);
-    }
+
+    public abstract void AddBacklogItem(BacklogItem backlogItem);
+
+    public abstract void RemoveBacklogItem(BacklogItem backlogItem);
 
     protected void AdvanceState(SprintState sprintState)
     {
@@ -31,6 +24,7 @@ public abstract class SprintState
     public abstract void ToNextState();
     public abstract void ReleaseSprint();
     public  abstract void ReviewSprint();
+    public abstract bool RunPipeline();
     public abstract void CancelSprint();
     public abstract void setState();
 }

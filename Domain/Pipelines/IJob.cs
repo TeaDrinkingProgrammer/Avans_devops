@@ -1,4 +1,4 @@
-﻿namespace Domain.Pipeline
+﻿namespace Domain.Pipelines
 {
     public interface IJob
     {

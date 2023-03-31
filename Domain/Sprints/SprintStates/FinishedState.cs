@@ -7,7 +7,16 @@ public class FinishedState : SprintState
     public FinishedState(Sprint sprint) : base(sprint)
     {
     }
-
+    
+    public override void AddBacklogItem(BacklogItem backlogItem)
+    {
+        throw new InvalidOperationException();
+    }
+    public override void RemoveBacklogItem(BacklogItem backlogItem)
+    {
+        throw new InvalidOperationException();
+    }
+    
     public override void UploadReview(string review)
     {
         if (Sprint.GetType() != typeof(ReviewSprint)) throw new IllegalStateAdvanceException();
@@ -23,18 +32,25 @@ public class FinishedState : SprintState
 
     public override void ReleaseSprint()
     {
-        //TODO: can this be done in a better way?
         if (Sprint.GetType() != typeof(ReleaseSprint)) throw new IllegalStateAdvanceException();
         var releaseSprint = (ReleaseSprint) Sprint;
-        AdvanceState(releaseSprint.ReleasedState);
+        if (RunPipeline()) AdvanceState(releaseSprint.ReleasedState);
     }
 
     public override void ReviewSprint()
     {
-        //TODO: can this be done in a better way?
         if (Sprint.GetType() != typeof(ReviewSprint)) throw new IllegalStateAdvanceException();
         var reviewSprint = (ReviewSprint) Sprint;
         AdvanceState(reviewSprint.ReviewState);
+    }
+
+    public override bool RunPipeline()
+    {
+        if (Sprint.Pipeline == null || !Sprint.Pipeline.Run())
+        {
+            throw new IllegalStateAdvanceException();
+        }
+        return true;
     }
 
     public override void CancelSprint()

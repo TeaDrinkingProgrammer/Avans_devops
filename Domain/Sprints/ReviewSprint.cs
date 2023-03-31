@@ -13,12 +13,12 @@ public class ReviewSprint : Sprint
 
     public override void AddBacklogItem(BacklogItem backlogItem)
     {
-        throw new NotImplementedException();
+        State.AddBacklogItem(backlogItem);
     }
 
     public override void RemoveBacklogItem(BacklogItem backlogItem)
     {
-        throw new NotImplementedException();
+        State.RemoveBacklogItem(backlogItem);
     }
 
     public override void ToNextState()

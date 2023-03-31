@@ -11,6 +11,16 @@ public class ReviewState : SprintState
     {
         Sprint = sprint;
     }
+    
+    public override void AddBacklogItem(BacklogItem backlogItem)
+    {
+        throw new InvalidOperationException();
+    }
+    
+    public override void RemoveBacklogItem(BacklogItem backlogItem)
+    {
+        throw new InvalidOperationException();
+    }
 
     public override void UploadReview(string review)
     {
@@ -32,6 +42,11 @@ public class ReviewState : SprintState
         throw new IllegalStateAdvanceException();
     }
 
+    public override bool RunPipeline()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+
     public override void CancelSprint()
     {
         throw new IllegalStateAdvanceException();
@@ -43,6 +58,5 @@ public class ReviewState : SprintState
         {
             throw new IllegalStateAdvanceException();
         }
-        // TODO trigger development pipeline
     }
 }
