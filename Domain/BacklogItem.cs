@@ -1,3 +1,4 @@
+using Domain.Forum;
 using Domain.Sprints;
 
 namespace Domain;
@@ -5,10 +6,13 @@ namespace Domain;
 public class BacklogItem
 {
     public string Name { get; set; }
-    public TeamMember TeamMember { get; set; }
+    public TeamMember Developer { get; set; }
+    
     public ICollection<BacklogItem> Activities { get; set; } = new List<BacklogItem>();
 
-    internal Sprint Sprint { get; set; }
+    public Sprint Sprint { get; set; }
+    
+    public Discussion Discussion { get; }
 
     private BacklogState _state;
     public BacklogState State
@@ -28,17 +32,21 @@ public class BacklogItem
     
     public DoneBacklogState DoneBacklogState { get; set; }
 
-    public BacklogItem(string name, IWriter writer, Sprint sprint, TeamMember teamMember)
+    public BacklogItem(string name, IWriter writer, Sprint sprint, TeamMember developer, TeamMember? tester = null)
     {
         Name = name;
         sprint.AddBacklogItem(this);
-        TeamMember = teamMember;
+        Developer = developer;
+        
         TodoBacklogState = new TodoBacklogState(writer, this);
         DoingBacklogState = new DoingBacklogState(writer, this);
         ReadyForTestingBacklogState = new ReadyForTestingBacklogState(writer, this);
         TestingBacklogState = new TestingBacklogState(writer, this);
         TestedBacklogState = new TestedBacklogState(writer, this);
         DoneBacklogState = new DoneBacklogState(writer, this);
+        
+        Discussion = new Discussion("Backlog: " + name);
+        
         _state = TodoBacklogState;
     }
 

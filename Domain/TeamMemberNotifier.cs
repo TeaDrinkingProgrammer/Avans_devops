@@ -1,17 +1,19 @@
+using Domain.Notifier.Events;
+
 namespace Domain;
 
-public class TeamMemberNotifier: IObservable<TeamMemberNotification>
+public class TeamMemberNotifier: IObservable<Notification>
 {
-    private readonly List<IObserver<TeamMemberNotification>> _observers = new();
+    private readonly List<IObserver<Notification>> _observers = new();
 
-    public void Notify(TeamMemberNotification message)
+    public void Notify(Notification message)
     {
         foreach (var observer in _observers)
         {
             observer.OnNext(message);
         }
     }
-    public IDisposable Subscribe(IObserver<TeamMemberNotification> observer)
+    public IDisposable Subscribe(IObserver<Notification> observer)
     {
         if (! _observers.Contains(observer)) _observers.Add(observer);
         return new Unsubscriber(_observers, observer);
@@ -19,10 +21,10 @@ public class TeamMemberNotifier: IObservable<TeamMemberNotification>
     
     private sealed class Unsubscriber : IDisposable
     {
-        private readonly IList<IObserver<TeamMemberNotification>> _observers;
-        private readonly IObserver<TeamMemberNotification>? _observer;
+        private readonly IList<IObserver<Notification>> _observers;
+        private readonly IObserver<Notification>? _observer;
 
-        public Unsubscriber(List<IObserver<TeamMemberNotification>> observers, IObserver<TeamMemberNotification> observer)
+        public Unsubscriber(List<IObserver<Notification>> observers, IObserver<Notification> observer)
         {
             _observers = observers;
             _observer = observer;

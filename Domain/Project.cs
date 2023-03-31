@@ -1,3 +1,5 @@
+using Domain.Notifier.Events;
+
 namespace Domain;
 
 public class Project

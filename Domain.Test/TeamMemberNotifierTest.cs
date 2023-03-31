@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Domain.Notifier;
 using Domain.Sprints;
 using NSubstitute;
 
@@ -11,28 +12,30 @@ public class TeamMemberNotifierTest
     {
         var writer = Substitute.For<IWriter>();
 
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
-            new TeamMember("Jan de Productowner"));
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
-        project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", writer));
+        var notificationService = new NotificationService(new EmailService(writer), new SlackService(writer));
+        project.ScrumMaster.Subscribe(notificationService);
         project.ScrumMaster.Notify("Hello scrummaster!");
 
         writer.Received().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Hello scrummaster!");
     }
+    
     [Fact]
     public void UnsubscribeEmailNotifier()
     {
         var writer = Substitute.For<IWriter>();
 
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
-            new TeamMember("Jan de Productowner"));
+        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
-        var emailNotifier = new EmailNotifier("jandescrumman@gmail.com", writer);
-        var unsubscriber = project.ScrumMaster.Subscribe(emailNotifier);
+        var notificationService = new NotificationService(new EmailService(writer), new SlackService(writer));
+        var unsubscriber = project.ScrumMaster.Subscribe(notificationService);
         unsubscriber.Dispose();
         
         project.ScrumMaster.Notify("Hello scrummaster!");

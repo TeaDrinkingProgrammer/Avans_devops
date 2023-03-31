@@ -29,6 +29,7 @@ public abstract class BacklogState
     }
     protected void AdvanceState(BacklogState backlogState)
     {
+        backlogState.SetState();
         _backlogItem.State = backlogState;
         _writer.WriteLine($"Transferring backlog item from {StateName} to {backlogState.StateName}...");
     }
