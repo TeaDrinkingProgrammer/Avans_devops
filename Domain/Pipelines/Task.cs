@@ -2,7 +2,7 @@
 
 public class Task : IJob
 {
-    public readonly List<IJob> Jobs;
+    public List<IJob> Jobs;
     public readonly string Name;
 
     public Task(string name)
