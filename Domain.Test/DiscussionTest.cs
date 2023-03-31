@@ -1,7 +1,6 @@
 using Domain.Exceptions;
 using Domain.Forum;
 using Domain.Notifier;
-using Domain.Pipeline;
 using Domain.Sprints;
 using NSubstitute;
 
