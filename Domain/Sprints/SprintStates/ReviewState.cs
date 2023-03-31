@@ -32,6 +32,11 @@ public class ReviewState : SprintState
         throw new IllegalStateAdvanceException();
     }
 
+    public override bool RunPipeline()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+
     public override void CancelSprint()
     {
         throw new IllegalStateAdvanceException();
@@ -43,6 +48,5 @@ public class ReviewState : SprintState
         {
             throw new IllegalStateAdvanceException();
         }
-        // TODO trigger development pipeline
     }
 }

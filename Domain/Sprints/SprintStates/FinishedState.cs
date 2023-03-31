@@ -25,7 +25,7 @@ public class FinishedState : SprintState
     {
         if (Sprint.GetType() != typeof(ReleaseSprint)) throw new IllegalStateAdvanceException();
         var releaseSprint = (ReleaseSprint) Sprint;
-        AdvanceState(releaseSprint.ReleasedState);
+        if (RunPipeline()) AdvanceState(releaseSprint.ReleasedState);
     }
 
     public override void ReviewSprint()
@@ -33,6 +33,15 @@ public class FinishedState : SprintState
         if (Sprint.GetType() != typeof(ReviewSprint)) throw new IllegalStateAdvanceException();
         var reviewSprint = (ReviewSprint) Sprint;
         AdvanceState(reviewSprint.ReviewState);
+    }
+
+    public override bool RunPipeline()
+    {
+        if (Sprint.Pipeline == null || !Sprint.Pipeline.Run())
+        {
+            throw new IllegalStateAdvanceException();
+        }
+        return true;
     }
 
     public override void CancelSprint()

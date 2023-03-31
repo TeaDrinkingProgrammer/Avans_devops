@@ -9,7 +9,7 @@ public abstract class Sprint
 
     public Project Project { get; }
     
-    public Pipeline? Pipeline { get; set; }
+    public IPipeline? Pipeline { get; set; }
 
     public ICollection<BacklogItem> BacklogItems { get; set; } = new List<BacklogItem>();
     
@@ -34,6 +34,10 @@ public abstract class Sprint
 
     public abstract void AddBacklogItem(BacklogItem backlogItem);
     public abstract void RemoveBacklogItem(BacklogItem backlogItem);
+    public void RunPipeline()
+    {
+        State.RunPipeline();
+    }
     public abstract void ToNextState();
     public abstract void CancelSprint();
 }

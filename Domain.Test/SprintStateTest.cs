@@ -1,5 +1,6 @@
 //Write an nunit boilerplate class
 using Domain.Exceptions;
+using Domain.Pipelines;
 using Domain.Sprints;
 using Domain.Sprints.SprintStates;
 using NSubstitute;
@@ -45,10 +46,15 @@ public class SprintStateTest
     public void SprintShouldHaveReleaseStateAfterCallingReleaseOnFinishedStateOnAReleaseSprint()
     {
         //Arrange
+        var pipeline = Substitute.For<IPipeline>();
+        
+        pipeline.Run().Returns(true);
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
             new TeamMember("Jan de Productowner")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
+        sprint.Pipeline = pipeline;
+        
         sprint.ToNextState();
         sprint.ToNextState();
         //Act
@@ -84,11 +90,14 @@ public class SprintStateTest
         //Arrange
         var scrumMasterWriter = Substitute.For<IWriter>();
         var productOwnerWriter = Substitute.For<IWriter>();
+        var pipeline = Substitute.For<IPipeline>();
+        pipeline.Run().Returns(true);
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman"),
             new TeamMember("Jan de Productowner")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
+        sprint.Pipeline = pipeline;
         
         project.ScrumMaster.Subscribe(new EmailNotifier("jandescrumman@gmail.com", scrumMasterWriter));
         project.ProductOwner.Subscribe(new EmailNotifier("jandeproductowner@gmail.com", productOwnerWriter));

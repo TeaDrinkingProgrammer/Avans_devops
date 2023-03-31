@@ -28,6 +28,11 @@ public class PlannedState : SprintState
         throw new IllegalStateAdvanceException();
     }
 
+    public override bool RunPipeline()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+
     public override void CancelSprint()
     {
         AdvanceState(Sprint.CancelledState);

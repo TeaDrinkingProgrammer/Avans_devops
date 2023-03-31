@@ -31,6 +31,7 @@ public abstract class SprintState
     public abstract void ToNextState();
     public abstract void ReleaseSprint();
     public  abstract void ReviewSprint();
+    public abstract bool RunPipeline();
     public abstract void CancelSprint();
     public abstract void setState();
 }
