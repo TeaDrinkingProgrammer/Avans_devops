@@ -1,5 +1,6 @@
 ﻿using Domain.Pipelines;
 using Domain.Pipelines.Actions;
+using NSubstitute;
 
 namespace Domain.Test;
 
@@ -7,7 +8,9 @@ public class PipelineBuilderTest
 {
     [Fact] private void PipelineBuilderShouldCreateTasks()
     {
-        var plb = new PipelineBuilder("deployment pipeline");
+        var pipelineWriter = Substitute.For<IWriter>();
+        
+        var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
         var pipeline = plb.AddTask(plb.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
@@ -26,7 +29,9 @@ public class PipelineBuilderTest
     
     [Fact] private void PipelineBuilderShouldCreateJobs()
     {
-        var plb = new PipelineBuilder("deployment pipeline");
+        var pipelineWriter = Substitute.For<IWriter>();
+        
+        var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
         var pipeline = plb.AddTask(plb.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")

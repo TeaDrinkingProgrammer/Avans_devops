@@ -1,6 +1,6 @@
 ﻿namespace Domain.Pipelines;
 
-public class Pipeline
+public class Pipeline : IPipeline
 {
     public List<Task> tasks { get; set; }
     public string name;

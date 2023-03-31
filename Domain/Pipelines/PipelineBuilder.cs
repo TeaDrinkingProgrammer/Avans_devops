@@ -20,7 +20,7 @@ public class PipelineBuilder
         return this;
     }
 
-    public Pipeline Build()
+    public IPipeline Build()
     {
         return _pipeline;
     }

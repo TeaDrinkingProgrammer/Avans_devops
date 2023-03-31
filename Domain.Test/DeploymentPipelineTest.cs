@@ -10,7 +10,7 @@ public class DeploymentPipelineTest
     {
         var pipelineWriter = Substitute.For<IWriter>();
         
-        var plb = new PipelineBuilder("deployment pipeline");
+        var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
         var pipeline = plb.AddTask(plb.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
@@ -24,7 +24,7 @@ public class DeploymentPipelineTest
                 .Build())
             .Build();
 
-        pipeline.Accept(new DeploymentVisitor(pipelineWriter));
+        pipeline.Run();
         pipelineWriter.Received().WriteLine("retrieving source from ./src/");
     }
     
@@ -33,7 +33,7 @@ public class DeploymentPipelineTest
     {
         var pipelineWriter = Substitute.For<IWriter>();
         
-        var plb = new PipelineBuilder("deployment pipeline");
+        var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
         var pipeline = plb.AddTask(plb.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
@@ -47,7 +47,7 @@ public class DeploymentPipelineTest
                 .Build())
             .Build();
 
-        pipeline.Accept(new DeploymentVisitor(pipelineWriter));
+        pipeline.Run();
         pipelineWriter.Received().WriteLine("installing package xUnit");
     }
     
@@ -56,7 +56,7 @@ public class DeploymentPipelineTest
     {
         var pipelineWriter = Substitute.For<IWriter>();
         
-        var plb = new PipelineBuilder("deployment pipeline");
+        var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
         var pipeline = plb.AddTask(plb.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
@@ -70,7 +70,7 @@ public class DeploymentPipelineTest
                 .Build())
             .Build();
 
-        pipeline.Accept(new DeploymentVisitor(pipelineWriter));
+        pipeline.Run();
         pipelineWriter.Received().WriteLine("building to directory ./out");
     }
     
@@ -79,7 +79,7 @@ public class DeploymentPipelineTest
     {
         var pipelineWriter = Substitute.For<IWriter>();
         
-        var plb = new PipelineBuilder("deployment pipeline");
+        var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
         var pipeline = plb.AddTask(plb.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
@@ -93,7 +93,7 @@ public class DeploymentPipelineTest
                 .Build())
             .Build();
 
-        pipeline.Accept(new DeploymentVisitor(pipelineWriter));
+        pipeline.Run();
         pipelineWriter.Received().WriteLine("executing tests -coverage");
     }
     
@@ -102,7 +102,7 @@ public class DeploymentPipelineTest
     {
         var pipelineWriter = Substitute.For<IWriter>();
         
-        var plb = new PipelineBuilder("deployment pipeline");
+        var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
         var pipeline = plb.AddTask(plb.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
@@ -116,7 +116,7 @@ public class DeploymentPipelineTest
                 .Build())
             .Build();
 
-        pipeline.Accept(new DeploymentVisitor(pipelineWriter));
+        pipeline.Run();
         pipelineWriter.Received().WriteLine("generating code analysis -report");
     }
     
@@ -125,7 +125,7 @@ public class DeploymentPipelineTest
     {
         var pipelineWriter = Substitute.For<IWriter>();
         
-        var plb = new PipelineBuilder("deployment pipeline");
+        var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
         var pipeline = plb.AddTask(plb.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
@@ -139,7 +139,7 @@ public class DeploymentPipelineTest
                 .Build())
             .Build();
 
-        pipeline.Accept(new DeploymentVisitor(pipelineWriter));
+        pipeline.Run();
         pipelineWriter.Received().WriteLine("executing script saveLogs.cs");
     }
     
@@ -148,7 +148,7 @@ public class DeploymentPipelineTest
     {
         var pipelineWriter = Substitute.For<IWriter>();
         
-        var plb = new PipelineBuilder("deployment pipeline");
+        var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
         var pipeline = plb.AddTask(plb.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
@@ -162,7 +162,7 @@ public class DeploymentPipelineTest
                 .Build())
             .Build();
 
-        pipeline.Accept(new DeploymentVisitor(pipelineWriter));
+        pipeline.Run();
         pipelineWriter.Received().WriteLine("deploying to https://application.z22.web.core.windows.net");
     }
     
@@ -171,7 +171,7 @@ public class DeploymentPipelineTest
     {
         var pipelineWriter = Substitute.For<IWriter>();
         
-        var plb = new PipelineBuilder("deployment pipeline");
+        var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
         var pipeline = plb.AddTask(plb.CreateTask("build and test")
                 .AddTask(plb.CreateTask("execute scripts")
                     .AddUtility("saveLogs.cs")
@@ -184,9 +184,9 @@ public class DeploymentPipelineTest
                     .Build())
                 .Build())
             .Build();
-             
 
-        pipeline.Accept(new DeploymentVisitor(pipelineWriter));
+
+        pipeline.Run();
         pipelineWriter.Received().WriteLine("executing execute scripts task");
     }
 }
