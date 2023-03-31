@@ -9,7 +9,7 @@ public class PipelineBuilder
         _pipeline = new Pipeline(pipelineName, visitor);
     }
 
-    public TaskBuilder CreateTask(string taskName)
+    public static TaskBuilder CreateTask(string taskName)
     {
         return new TaskBuilder(taskName);
     }
@@ -34,56 +34,56 @@ public class PipelineBuilder
             _task = new Task(taskName);
         }
         
-        public TaskBuilder CreateTask(string taskName)
+        public static TaskBuilder CreateTask(string taskName)
         {
             return new TaskBuilder(taskName);
         }
         
         public TaskBuilder AddTask(Task task)
         {
-            _task.jobs.Add(task);
+            _task.Jobs.Add(task);
             return this;
         }
 
         public TaskBuilder AddSource(string args)
         {
-            _task.jobs.Add(new Source(args));
+            _task.Jobs.Add(new Source(args));
             return this;
         }
         
         public TaskBuilder AddPackage(string args)
         {
-            _task.jobs.Add(new Package(args));
+            _task.Jobs.Add(new Package(args));
             return this;
         }
         
         public TaskBuilder AddBuild(string args)
         {
-            _task.jobs.Add(new Build(args));
+            _task.Jobs.Add(new Build(args));
             return this;
         }
         
         public TaskBuilder AddTest(string args)
         {
-            _task.jobs.Add(new Test(args));
+            _task.Jobs.Add(new Test(args));
             return this;
         }
         
         public TaskBuilder AddAnalyse(string args)
         {
-            _task.jobs.Add(new Analyse(args));
+            _task.Jobs.Add(new Analyse(args));
             return this;
         }
         
         public TaskBuilder AddDeploy(string args)
         {
-            _task.jobs.Add(new Deploy(args));
+            _task.Jobs.Add(new Deploy(args));
             return this;
         }
         
         public TaskBuilder AddUtility(string args)
         {
-            _task.jobs.Add(new Utility(args));
+            _task.Jobs.Add(new Utility(args));
             return this;
         }
 

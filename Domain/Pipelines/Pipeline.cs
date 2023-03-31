@@ -3,12 +3,12 @@
 public class Pipeline : IPipeline
 {
     public List<Task> tasks { get; set; }
-    public string name;
+    public readonly string Name;
     private readonly IVisitor _visitor;
 
     public Pipeline(string name, IVisitor visitor)
     {
-        this.name = name;
+        Name = name;
         tasks = new List<Task>();
         
         _visitor = visitor;
@@ -21,7 +21,7 @@ public class Pipeline : IPipeline
             Accept(_visitor);
             return true;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return false;
         }

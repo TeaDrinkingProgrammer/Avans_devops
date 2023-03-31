@@ -11,13 +11,13 @@ public class PipelineBuilderTest
         var pipelineWriter = Substitute.For<IWriter>();
         
         var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
-        var pipeline = plb.AddTask(plb.CreateTask("build and test")
+        var pipeline = plb.AddTask(PipelineBuilder.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
                 .AddBuild("./out")
                 .AddTest("-coverage")
                 .Build())
-            .AddTask(plb.CreateTask("analyse and deploy")
+            .AddTask(PipelineBuilder.CreateTask("analyse and deploy")
                 .AddAnalyse("-report")
                 .AddUtility("saveLogs.cs")
                 .AddDeploy("https://application.z22.web.core.windows.net")
@@ -32,19 +32,19 @@ public class PipelineBuilderTest
         var pipelineWriter = Substitute.For<IWriter>();
         
         var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
-        var pipeline = plb.AddTask(plb.CreateTask("build and test")
+        var pipeline = plb.AddTask(PipelineBuilder.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
                 .AddBuild("./out")
                 .AddTest("-coverage")
                 .Build())
-            .AddTask(plb.CreateTask("analyse and deploy")
+            .AddTask(PipelineBuilder.CreateTask("analyse and deploy")
                 .AddAnalyse("-report")
                 .AddUtility("saveLogs.cs")
                 .AddDeploy("https://application.z22.web.core.windows.net")
                 .Build())
             .Build();
         
-        Assert.Equal(7, pipeline.tasks[0].jobs.Count + pipeline.tasks[1].jobs.Count);
+        Assert.Equal(7, pipeline.tasks[0].Jobs.Count + pipeline.tasks[1].Jobs.Count);
     }
 }

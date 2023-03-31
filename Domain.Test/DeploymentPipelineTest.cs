@@ -11,13 +11,13 @@ public class DeploymentPipelineTest
         var pipelineWriter = Substitute.For<IWriter>();
         
         var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
-        var pipeline = plb.AddTask(plb.CreateTask("build and test")
+        var pipeline = plb.AddTask(PipelineBuilder.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
                 .AddBuild("./out")
                 .AddTest("-coverage")
                 .Build())
-            .AddTask(plb.CreateTask("analyse and deploy")
+            .AddTask(PipelineBuilder.CreateTask("analyse and deploy")
                 .AddAnalyse("-report")
                 .AddUtility("saveLogs.cs")
                 .AddDeploy("https://application.z22.web.core.windows.net")
@@ -34,13 +34,13 @@ public class DeploymentPipelineTest
         var pipelineWriter = Substitute.For<IWriter>();
         
         var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
-        var pipeline = plb.AddTask(plb.CreateTask("build and test")
+        var pipeline = plb.AddTask(PipelineBuilder.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
                 .AddBuild("./out")
                 .AddTest("-coverage")
                 .Build())
-            .AddTask(plb.CreateTask("analyse and deploy")
+            .AddTask(PipelineBuilder.CreateTask("analyse and deploy")
                 .AddAnalyse("-report")
                 .AddUtility("saveLogs.cs")
                 .AddDeploy("https://application.z22.web.core.windows.net")
@@ -57,13 +57,13 @@ public class DeploymentPipelineTest
         var pipelineWriter = Substitute.For<IWriter>();
         
         var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
-        var pipeline = plb.AddTask(plb.CreateTask("build and test")
+        var pipeline = plb.AddTask(PipelineBuilder.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
                 .AddBuild("./out")
                 .AddTest("-coverage")
                 .Build())
-            .AddTask(plb.CreateTask("analyse and deploy")
+            .AddTask(PipelineBuilder.CreateTask("analyse and deploy")
                 .AddAnalyse("-report")
                 .AddUtility("saveLogs.cs")
                 .AddDeploy("https://application.z22.web.core.windows.net")
@@ -80,13 +80,13 @@ public class DeploymentPipelineTest
         var pipelineWriter = Substitute.For<IWriter>();
         
         var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
-        var pipeline = plb.AddTask(plb.CreateTask("build and test")
+        var pipeline = plb.AddTask(PipelineBuilder.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
                 .AddBuild("./out")
                 .AddTest("-coverage")
                 .Build())
-            .AddTask(plb.CreateTask("analyse and deploy")
+            .AddTask(PipelineBuilder.CreateTask("analyse and deploy")
                 .AddAnalyse("-report")
                 .AddUtility("saveLogs.cs")
                 .AddDeploy("https://application.z22.web.core.windows.net")
@@ -103,13 +103,13 @@ public class DeploymentPipelineTest
         var pipelineWriter = Substitute.For<IWriter>();
         
         var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
-        var pipeline = plb.AddTask(plb.CreateTask("build and test")
+        var pipeline = plb.AddTask(PipelineBuilder.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
                 .AddBuild("./out")
                 .AddTest("-coverage")
                 .Build())
-            .AddTask(plb.CreateTask("analyse and deploy")
+            .AddTask(PipelineBuilder.CreateTask("analyse and deploy")
                 .AddAnalyse("-report")
                 .AddUtility("saveLogs.cs")
                 .AddDeploy("https://application.z22.web.core.windows.net")
@@ -126,13 +126,13 @@ public class DeploymentPipelineTest
         var pipelineWriter = Substitute.For<IWriter>();
         
         var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
-        var pipeline = plb.AddTask(plb.CreateTask("build and test")
+        var pipeline = plb.AddTask(PipelineBuilder.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
                 .AddBuild("./out")
                 .AddTest("-coverage")
                 .Build())
-            .AddTask(plb.CreateTask("analyse and deploy")
+            .AddTask(PipelineBuilder.CreateTask("analyse and deploy")
                 .AddAnalyse("-report")
                 .AddUtility("saveLogs.cs")
                 .AddDeploy("https://application.z22.web.core.windows.net")
@@ -149,13 +149,13 @@ public class DeploymentPipelineTest
         var pipelineWriter = Substitute.For<IWriter>();
         
         var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
-        var pipeline = plb.AddTask(plb.CreateTask("build and test")
+        var pipeline = plb.AddTask(PipelineBuilder.CreateTask("build and test")
                 .AddSource("./src/")
                 .AddPackage("xUnit")
                 .AddBuild("./out")
                 .AddTest("-coverage")
                 .Build())
-            .AddTask(plb.CreateTask("analyse and deploy")
+            .AddTask(PipelineBuilder.CreateTask("analyse and deploy")
                 .AddAnalyse("-report")
                 .AddUtility("saveLogs.cs")
                 .AddDeploy("https://application.z22.web.core.windows.net")
@@ -172,12 +172,12 @@ public class DeploymentPipelineTest
         var pipelineWriter = Substitute.For<IWriter>();
         
         var plb = new PipelineBuilder("deployment pipeline", new DeploymentVisitor(pipelineWriter));
-        var pipeline = plb.AddTask(plb.CreateTask("build and test")
-                .AddTask(plb.CreateTask("execute scripts")
+        var pipeline = plb.AddTask(PipelineBuilder.CreateTask("build and test")
+                .AddTask(PipelineBuilder.CreateTask("execute scripts")
                     .AddUtility("saveLogs.cs")
                     .AddUtility("saveResults.cs")
                     .Build())
-                .AddTask(plb.CreateTask("build application")
+                .AddTask(PipelineBuilder.CreateTask("build application")
                     .AddSource("./src/")
                     .AddPackage("xUnit")
                     .AddBuild("./out")
