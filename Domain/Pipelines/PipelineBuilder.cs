@@ -4,9 +4,9 @@ namespace Domain.Pipelines;
 
 public class PipelineBuilder
 {
-    public PipelineBuilder(string pipelineName)
+    public PipelineBuilder(string pipelineName, IVisitor visitor)
     {
-        _pipeline = new Pipeline(pipelineName);
+        _pipeline = new Pipeline(pipelineName, visitor);
     }
 
     public TaskBuilder CreateTask(string taskName)
