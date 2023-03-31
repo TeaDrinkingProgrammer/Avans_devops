@@ -1,4 +1,4 @@
-﻿namespace Domain.Pipeline.Actions;
+﻿namespace Domain.Pipelines.Actions;
 
 public abstract class Action : IJob
 {

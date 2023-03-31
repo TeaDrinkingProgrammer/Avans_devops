@@ -1,6 +1,6 @@
-﻿using Domain.Pipeline.Actions;
+﻿using Domain.Pipelines.Actions;
 
-namespace Domain.Pipeline;
+namespace Domain.Pipelines;
 
 public class DeploymentVisitor : IVisitor
 {

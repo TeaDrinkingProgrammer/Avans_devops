@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Pipeline.Actions;
+namespace Domain.Pipelines.Actions;
 
-public class Deploy : Action
+public class Test : Action
 {
     public override void Accept(IVisitor visitor)
     {
-        visitor.VisitDeploy(this);
+        visitor.VisitTest(this);
     }
 
-    public Deploy(string args) : base(args)
+    public Test(string args) : base(args)
     {
     }
 }

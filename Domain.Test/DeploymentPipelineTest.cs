@@ -1,4 +1,4 @@
-﻿using Domain.Pipeline;
+﻿using Domain.Pipelines;
 using NSubstitute;
 
 namespace Domain.Test;

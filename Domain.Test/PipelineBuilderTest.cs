@@ -1,5 +1,5 @@
-﻿using Domain.Pipeline;
-using Domain.Pipeline.Actions;
+﻿using Domain.Pipelines;
+using Domain.Pipelines.Actions;
 
 namespace Domain.Test;
 

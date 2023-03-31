@@ -1,4 +1,4 @@
-﻿namespace Domain.Pipeline.Actions
+﻿namespace Domain.Pipelines.Actions
 {
     public class Source : Action
     {
