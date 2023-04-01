@@ -12,21 +12,6 @@ public class TestingBacklogState : BacklogState
     {
         // Doesn't do anything
     }
-    public override void ToTodo()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ToDoing()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ToReadyForTesting()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void ToTesting()
     {
         CurrentBranchMessage();

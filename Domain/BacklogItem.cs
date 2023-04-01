@@ -33,10 +33,9 @@ public class BacklogItem : ISprintVisitable
     
     public DoneBacklogState DoneBacklogState { get; set; }
 
-    public BacklogItem(string name, IWriter writer, Sprint sprint, TeamMember developer, TeamMember? tester = null)
+    public BacklogItem(string name, IWriter writer, TeamMember developer)
     {
         Name = name;
-        sprint.AddBacklogItem(this);
         Developer = developer;
         
         TodoBacklogState = new TodoBacklogState(writer, this);

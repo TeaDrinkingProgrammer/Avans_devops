@@ -2,5 +2,5 @@
 
 public interface MessagingService
 {
-    public void Send(string reciever, string message);
+    public void Send(string receiver, string message);
 }

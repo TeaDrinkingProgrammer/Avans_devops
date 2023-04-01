@@ -1,10 +1,10 @@
-﻿using Domain.Pipeline.Actions;
+﻿using Domain.Pipelines.Actions;
 
-namespace Domain.Pipeline;
+namespace Domain.Pipelines;
 
 public class DeploymentVisitor : IVisitor
 {
-    private IWriter _writer;
+    private readonly IWriter _writer;
 
     public DeploymentVisitor(IWriter writer)
     {
@@ -13,12 +13,12 @@ public class DeploymentVisitor : IVisitor
 
     public void VisitPipeline(Pipeline pipeline)
     {
-        _writer.WriteLine($"executing {pipeline.name} pipeline"); 
+        _writer.WriteLine($"executing {pipeline.Name} pipeline"); 
     }
 
     public void VisitTask(Task task)
     {
-        _writer.WriteLine($"executing {task.name} task");
+        _writer.WriteLine($"executing {task.Name} task");
     }
 
     public void VisitSource(Source source)

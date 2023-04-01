@@ -7,10 +7,15 @@ public class PlannedState : SprintState
     public PlannedState(Sprint sprint) : base(sprint)
     {
     }
-
-    public override void UploadReview(string review)
+    
+    public override void AddBacklogItem(BacklogItem backlogItem)
     {
-        throw new Exception();
+        AddBacklogItemImpl(backlogItem);
+    }
+    
+    public override void RemoveBacklogItem(BacklogItem backlogItem)
+    {
+        RemoveBacklogItemImpl(backlogItem);
     }
 
     public override void ToNextState()
@@ -18,22 +23,12 @@ public class PlannedState : SprintState
         AdvanceState(Sprint.InProgressState);
     }
 
-    public override void ReleaseSprint()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ReviewSprint()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void CancelSprint()
     {
         AdvanceState(Sprint.CancelledState);
     }
 
-    public override void setState()
+    protected override void SetState()
     {
     }
 }

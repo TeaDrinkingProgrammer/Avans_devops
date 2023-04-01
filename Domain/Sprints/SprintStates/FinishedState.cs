@@ -16,25 +16,27 @@ public class FinishedState : SprintState
         reviewSprint.SprintReview = review;
     }
 
-    public override void ToNextState()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void ReleaseSprint()
     {
-        //TODO: can this be done in a better way?
         if (Sprint.GetType() != typeof(ReleaseSprint)) throw new IllegalStateAdvanceException();
         var releaseSprint = (ReleaseSprint) Sprint;
-        AdvanceState(releaseSprint.ReleasedState);
+        if (RunPipeline()) AdvanceState(releaseSprint.ReleasedState);
     }
 
     public override void ReviewSprint()
     {
-        //TODO: can this be done in a better way?
         if (Sprint.GetType() != typeof(ReviewSprint)) throw new IllegalStateAdvanceException();
         var reviewSprint = (ReviewSprint) Sprint;
         AdvanceState(reviewSprint.ReviewState);
+    }
+
+    public override bool RunPipeline()
+    {
+        if (Sprint.Pipeline == null || !Sprint.Pipeline.Run())
+        {
+            throw new IllegalStateAdvanceException();
+        }
+        return true;
     }
 
     public override void CancelSprint()
@@ -42,7 +44,7 @@ public class FinishedState : SprintState
         AdvanceState(Sprint.CancelledState);
     }
 
-    public override void setState()
+    protected override void SetState()
     {
     }
 }
