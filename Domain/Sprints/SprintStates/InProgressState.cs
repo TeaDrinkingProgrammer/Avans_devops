@@ -22,7 +22,7 @@ public class InProgressState : SprintState
 
     public override void UploadReview(string review)
     {
-        throw new IllegalStateAdvanceException();
+        throw new InvalidOperationException();
     }
 
     public override void ToNextState()

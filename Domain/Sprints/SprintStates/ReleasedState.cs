@@ -22,7 +22,7 @@ public class ReleasedState : SprintState
 
     public override void UploadReview(string review)
     {
-        throw new Exception();
+        throw new InvalidOperationException();
     }
 
     public override void ToNextState()

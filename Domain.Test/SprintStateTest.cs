@@ -302,7 +302,7 @@ public class SprintStateTest
     }
     
     [Fact]
-    public void ShouldRemoveBacklogItemToReviewSprintInPlannedState()
+    public void ShouldRemoveBacklogItemFromReviewSprintInPlannedState()
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
@@ -320,7 +320,7 @@ public class SprintStateTest
     }
     
     [Fact]
-    public void ShouldRemoveBacklogItemToReleaseSprintInPlannedState()
+    public void ShouldRemoveBacklogItemFromReleaseSprintInPlannedState()
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
@@ -358,7 +358,7 @@ public class SprintStateTest
     }
     
     [Fact]
-    public void ShouldremoveBacklogItemToReleaseSprintInProgressState()
+    public void ShouldRemoveBacklogItemFromReleaseSprintInProgressState()
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
@@ -485,5 +485,77 @@ public class SprintStateTest
         //Assert
         Assert.Throws<InvalidOperationException>(
             () => sprint.RemoveBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), sprint, new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
+    }
+
+    [Fact]
+    public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenUploadingReviewInPlannedState()
+    {
+        //Arrange
+        var project = new Project("SO&A 2", new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
+            new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReviewSprint(project);
+        //Act
+
+        //Assert
+        Assert.Throws<InvalidOperationException>(
+            () => sprint.UploadReview("test review"));
+    }
+    
+    [Fact]
+    public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenUploadingReviewInInProgressState()
+    {
+        //Arrange
+        var project = new Project("SO&A 2", new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
+            new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReviewSprint(project);
+        sprint.ToNextState();
+        //Act
+
+        //Assert
+        Assert.Throws<InvalidOperationException>(
+            () => sprint.UploadReview("test review"));
+    }
+    
+    [Fact]
+    public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenUploadingReviewInReviewState()
+    {
+        //Arrange
+        var project = new Project("SO&A 2", new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
+            new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReviewSprint(project);
+        sprint.ToNextState();
+        sprint.ToNextState();
+        sprint.UploadReview("test review");
+        sprint.Review();
+        //Act
+
+        //Assert
+        Assert.Throws<InvalidOperationException>(
+            () => sprint.UploadReview("test review"));
+    }
+    
+    [Fact]
+    public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenUploadingReviewInCanecelledState()
+    {
+        //Arrange
+        var project = new Project("SO&A 2", new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
+            new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
+        var sprintFactory = new SprintFactory();
+        var sprint = sprintFactory.NewReviewSprint(project);
+        sprint.ToNextState();
+        sprint.ToNextState();
+        sprint.CancelSprint();
+        //Act
+
+        //Assert
+        Assert.Throws<InvalidOperationException>(
+            () => sprint.UploadReview("test review"));
     }
 }
