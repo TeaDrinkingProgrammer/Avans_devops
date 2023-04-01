@@ -3,7 +3,7 @@
 public class GitRepository : IRepository
 {
     private readonly string _remote;
-    private List<IBranch> _branches;
+    private readonly List<IBranch> _branches;
     private readonly IWriter _writer;
 
     public GitRepository(string remote, IWriter writer)

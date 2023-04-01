@@ -51,7 +51,7 @@ public class BranchTest
         var branchWriter = Substitute.For<IWriter>();
         var backlogWriter = Substitute.For<IWriter>();
         var branch = new GitBranch("master", "https://origin.git", branchWriter);
-        new BacklogItem("Backlog Item 1", backlogWriter, new TeamMember("John Doe"))
+        var _ = new BacklogItem("Backlog Item 1", backlogWriter, new TeamMember("John Doe"))
         {
             Branch = branch
         };

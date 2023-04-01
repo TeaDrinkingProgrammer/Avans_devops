@@ -3,7 +3,7 @@
 public class SubversionRepository : IRepository
 {
     private readonly string _server;
-    private List<IBranch> _branches;
+    private readonly List<IBranch> _branches;
     private readonly IWriter _writer;
 
     public SubversionRepository(string server, IWriter writer)

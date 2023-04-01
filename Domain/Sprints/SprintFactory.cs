@@ -2,7 +2,7 @@ using Domain.Pipelines;
 
 namespace Domain.Sprints;
 
-public class SprintFactory
+public static class SprintFactory
 {
     public static ReleaseSprint NewReleaseSprint(Project project,TeamMember teamMember,  IPipeline? pipeline = null)
     {

@@ -3,7 +3,7 @@
 //Pattern used: Composite
 public class Task : IJob
 {
-    public readonly List<IJob> Jobs;
+    public ICollection<IJob> Jobs { get; }
     public readonly string Name;
 
     public Task(string name)
