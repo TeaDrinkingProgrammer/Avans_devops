@@ -310,7 +310,7 @@ public class SprintStateTest
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReviewSprint(project);
-        var item = new BacklogItem("", Substitute.For<IWriter>(), sprint,
+        var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
         //Act
         sprint.AddBacklogItem(item);
@@ -328,7 +328,7 @@ public class SprintStateTest
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
-        var item = new BacklogItem("", Substitute.For<IWriter>(), sprint,
+        var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
         //Act
         sprint.AddBacklogItem(item);
@@ -346,7 +346,7 @@ public class SprintStateTest
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReviewSprint(project);
-        var item = new BacklogItem("", Substitute.For<IWriter>(), sprint,
+        var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
         
         sprint.ToNextState();
@@ -366,10 +366,11 @@ public class SprintStateTest
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
-        var item = new BacklogItem("", Substitute.For<IWriter>(), sprint,
+        var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
         
         sprint.ToNextState();
+        
         //Act
         sprint.AddBacklogItem(item);
         sprint.RemoveBacklogItem(item);
@@ -386,13 +387,18 @@ public class SprintStateTest
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReviewSprint(project);
+        
+        var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
+            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
+        sprint.AddBacklogItem(backlogItem);
+
         sprint.ToNextState();
         sprint.ToNextState();
         //Act
-
+        
         //Assert
         Assert.Throws<InvalidOperationException>(
-            () => sprint.RemoveBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), sprint, new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
+            () => sprint.RemoveBacklogItem(backlogItem));
     }
     
     [Fact]
@@ -403,13 +409,18 @@ public class SprintStateTest
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
+        
+        var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
+            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
+        sprint.AddBacklogItem(backlogItem);
+        
         sprint.ToNextState();
         sprint.ToNextState();
         //Act
-
+        
         //Assert
         Assert.Throws<InvalidOperationException>(
-            () => sprint.RemoveBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), sprint, new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
+            () => sprint.RemoveBacklogItem(backlogItem));
     }
     
     [Fact]
@@ -420,6 +431,11 @@ public class SprintStateTest
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReviewSprint(project);
+        
+        var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
+            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
+        sprint.AddBacklogItem(backlogItem);
+        
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.UploadReview("test review");
@@ -428,7 +444,7 @@ public class SprintStateTest
 
         //Assert
         Assert.Throws<InvalidOperationException>(
-            () => sprint.RemoveBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), sprint, new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
+            () => sprint.RemoveBacklogItem(backlogItem));
     }
     
     [Fact]
@@ -442,6 +458,11 @@ public class SprintStateTest
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
+        
+        var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
+            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
+        sprint.AddBacklogItem(backlogItem);
+        
         sprint.Pipeline = pipeline;
         sprint.ToNextState();
         sprint.ToNextState();
@@ -450,7 +471,7 @@ public class SprintStateTest
 
         //Assert
         Assert.Throws<InvalidOperationException>(
-            () => sprint.RemoveBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), sprint, new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
+            () => sprint.RemoveBacklogItem(backlogItem));
     }
     
     [Fact]
@@ -461,6 +482,11 @@ public class SprintStateTest
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReviewSprint(project);
+        
+        var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
+            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
+        sprint.AddBacklogItem(backlogItem);
+        
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.CancelSprint();
@@ -468,7 +494,7 @@ public class SprintStateTest
 
         //Assert
         Assert.Throws<InvalidOperationException>(
-            () => sprint.RemoveBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), sprint, new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
+            () => sprint.RemoveBacklogItem(backlogItem));
     }
     
     [Fact]
@@ -478,6 +504,11 @@ public class SprintStateTest
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
+        
+        var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
+            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
+        sprint.AddBacklogItem(backlogItem);
+        
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.CancelSprint();
@@ -485,7 +516,7 @@ public class SprintStateTest
 
         //Assert
         Assert.Throws<InvalidOperationException>(
-            () => sprint.RemoveBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), sprint, new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
+            () => sprint.RemoveBacklogItem(backlogItem));
     }
 
     [Fact]
