@@ -10,21 +10,50 @@ public abstract class SprintState
         Sprint = sprint;
     }
 
-    public abstract void AddBacklogItem(BacklogItem backlogItem);
+    public virtual void AddBacklogItem(BacklogItem backlogItem)
+    {
+        throw new InvalidOperationException();
+    }
 
-    public abstract void RemoveBacklogItem(BacklogItem backlogItem);
-
+    public virtual void RemoveBacklogItem(BacklogItem backlogItem)
+    {
+        throw new InvalidOperationException();
+    }
+    
     protected void AdvanceState(SprintState sprintState)
     {
         sprintState.setState();
         Sprint.State = sprintState;
     }
+    
+    public virtual void UploadReview(string review)
+    {
+        throw new InvalidOperationException();
+    }
+    
+    public virtual void ToNextState()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+    
+    public virtual void ReleaseSprint()
+    {
+        throw new IllegalStateAdvanceException();
+    }
 
-    public abstract void UploadReview(string review);
-    public abstract void ToNextState();
-    public abstract void ReleaseSprint();
-    public  abstract void ReviewSprint();
-    public abstract bool RunPipeline();
-    public abstract void CancelSprint();
+    public virtual void ReviewSprint()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+    
+    public virtual bool RunPipeline()
+    {
+        throw new InvalidOperationException();
+    }
+    
+    public virtual void CancelSprint()
+    {
+        throw new IllegalStateAdvanceException();
+    }
     public abstract void setState();
 }

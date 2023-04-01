@@ -20,29 +20,9 @@ public class InProgressState : SprintState
         Sprint.BacklogItems.Remove(backlogItem);
     }
 
-    public override void UploadReview(string review)
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void ToNextState()
     {
         AdvanceState(Sprint.FinishedState);
-    }
-
-    public override void ReleaseSprint()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ReviewSprint()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override bool RunPipeline()
-    {
-        throw new IllegalStateAdvanceException();
     }
 
     public override void CancelSprint()

@@ -9,8 +9,8 @@ public class SlackService : MessagingService
         _writer = writer;
     }
 
-    public void Send(string reciever, string message)
+    public void Send(string receiver, string message)
     {
-        _writer.WriteLine($"Sending slack message to {reciever} with message {message}");
+        _writer.WriteLine($"@<{receiver}>: {message}");
     }
 }
