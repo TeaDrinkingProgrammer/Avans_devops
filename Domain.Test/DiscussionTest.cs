@@ -44,7 +44,7 @@ public class DiscussionTest
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprintFactory = new SprintFactory();
+
         var sprint = SprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, user);
@@ -72,7 +72,7 @@ public class DiscussionTest
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprintFactory = new SprintFactory();
+
         var sprint = SprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, user);

@@ -15,7 +15,6 @@ public class BacklogStateTest
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner"));
-        var sprintFactory = new SprintFactory();
         var sprint = SprintFactory.NewReleaseSprint(project);
 
         var backlogItem = new BacklogItem("1", writer,
@@ -44,7 +43,6 @@ public class BacklogStateTest
 
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner"));
-        var sprintFactory = new SprintFactory();
         var sprint = SprintFactory.NewReleaseSprint(project);
 
         var backlogItem = new BacklogItem("1", writer, new TeamMember("Linus Torvalds"));
@@ -67,7 +65,6 @@ public class BacklogStateTest
 
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner"));
-        var sprintFactory = new SprintFactory();
         var sprint = SprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, new TeamMember("Linus Torvalds"));
@@ -90,7 +87,6 @@ public class BacklogStateTest
 
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner"));
-        var sprintFactory = new SprintFactory();
         var sprint = SprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, new TeamMember("Linus Torvalds"));
@@ -111,7 +107,6 @@ public class BacklogStateTest
 
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner"));
-        var sprintFactory = new SprintFactory();
         var sprint = SprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, new TeamMember("Linus Torvalds"));
@@ -132,7 +127,6 @@ public class BacklogStateTest
 
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner"));
-        var sprintFactory = new SprintFactory();
         var sprint = SprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, new TeamMember("Linus Torvalds"));
@@ -152,7 +146,6 @@ public class BacklogStateTest
             new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
             new TeamMember("Jan de Testerman", "jandetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprintFactory = new SprintFactory();
         var sprint = SprintFactory.NewReleaseSprint(project);
         var backlogItem = new BacklogItem("1", writer,
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));

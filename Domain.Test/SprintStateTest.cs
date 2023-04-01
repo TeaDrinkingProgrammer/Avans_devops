@@ -15,8 +15,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-                    new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+                    new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         sprint.ToNextState();
         sprint.ToNextState();
@@ -31,8 +30,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         sprint.ToNextState();
         sprint.ToNextState();
@@ -51,8 +49,7 @@ public class SprintStateTest
         
         pipeline.Run().Returns(true);
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         sprint.Pipeline = pipeline;
         
@@ -71,8 +68,7 @@ public class SprintStateTest
         var productOwnerWriter = Substitute.For<IWriter>();
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         
         var scrumMasterNotificationService = new NotificationService(new EmailService(scrumMasterWriter), new SlackService(scrumMasterWriter));
@@ -98,8 +94,7 @@ public class SprintStateTest
         pipeline.Run().Returns(true);
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         sprint.Pipeline = pipeline;
         
@@ -125,8 +120,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -142,8 +136,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -159,8 +152,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -179,7 +171,7 @@ public class SprintStateTest
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+        
         var sprint = SprintFactory.NewReleaseSprint(project);
         var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -197,8 +189,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         sprint.ToNextState();
         sprint.ToNextState();
@@ -214,8 +205,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         sprint.ToNextState();
         sprint.ToNextState();
@@ -231,8 +221,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         sprint.ToNextState();
         sprint.ToNextState();
@@ -253,8 +242,7 @@ public class SprintStateTest
         pipeline.Run().Returns(true);
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         sprint.Pipeline = pipeline;
         sprint.ToNextState();
@@ -272,8 +260,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         sprint.ToNextState();
         sprint.ToNextState();
@@ -289,8 +276,7 @@ public class SprintStateTest
     public void SprintShouldThrowInvalidOperationExceptionOnReleaseSprintWhenAddingBacklogItemsInCancelledState() {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         sprint.ToNextState();
         sprint.ToNextState();
@@ -307,8 +293,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -325,8 +310,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -343,8 +327,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -363,8 +346,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -384,8 +366,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         
         var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
@@ -406,8 +387,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
@@ -428,8 +408,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         
         var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
@@ -455,8 +434,7 @@ public class SprintStateTest
         pipeline.Run().Returns(true);
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
@@ -479,8 +457,7 @@ public class SprintStateTest
     {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         
         var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
@@ -501,8 +478,7 @@ public class SprintStateTest
     public void SprintShouldThrowInvalidOperationExceptionOnReleaseSprintWhenRemovingBacklogItemsInCancelledState() {
         //Arrange
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
@@ -526,7 +502,6 @@ public class SprintStateTest
         var project = new Project("SO&A 2", new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprintFactory = new SprintFactory();
         var sprint = SprintFactory.NewReviewSprint(project);
         //Act
 
@@ -542,7 +517,6 @@ public class SprintStateTest
         var project = new Project("SO&A 2", new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprintFactory = new SprintFactory();
         var sprint = SprintFactory.NewReviewSprint(project);
         sprint.ToNextState();
         //Act
@@ -559,7 +533,6 @@ public class SprintStateTest
         var project = new Project("SO&A 2", new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprintFactory = new SprintFactory();
         var sprint = SprintFactory.NewReviewSprint(project);
         sprint.ToNextState();
         sprint.ToNextState();
@@ -579,7 +552,6 @@ public class SprintStateTest
         var project = new Project("SO&A 2", new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprintFactory = new SprintFactory();
         var sprint = SprintFactory.NewReviewSprint(project);
         sprint.ToNextState();
         sprint.ToNextState();
@@ -599,8 +571,7 @@ public class SprintStateTest
         pipeline.Run().Returns(true);
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         sprint.Pipeline = pipeline;
 
@@ -616,8 +587,7 @@ public class SprintStateTest
         pipeline.Run().Returns(true);
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         sprint.Pipeline = pipeline;
 
@@ -633,8 +603,7 @@ public class SprintStateTest
         pipeline.Run().Returns(true);
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         sprint.Pipeline = pipeline;
         sprint.ToNextState();
@@ -651,8 +620,7 @@ public class SprintStateTest
         pipeline.Run().Returns(true);
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         sprint.Pipeline = pipeline;
         sprint.ToNextState();
@@ -667,8 +635,7 @@ public class SprintStateTest
         //Arrange
 
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
 
         sprint.ToNextState();
@@ -684,8 +651,7 @@ public class SprintStateTest
         //Arrange
 
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         
         sprint.ToNextState();
@@ -703,8 +669,7 @@ public class SprintStateTest
         pipeline.Run().Returns(true);
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         sprint.Pipeline = pipeline;
         sprint.ToNextState();
@@ -724,8 +689,7 @@ public class SprintStateTest
         pipeline.Run().Returns(true);
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         sprint.Pipeline = pipeline;
         sprint.ToNextState();
@@ -744,8 +708,7 @@ public class SprintStateTest
         pipeline.Run().Returns(true);
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReviewSprint(project);
         sprint.Pipeline = pipeline;
         sprint.ToNextState();
@@ -762,8 +725,7 @@ public class SprintStateTest
         pipeline.Run().Returns(true);
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprint = SprintFactory.NewReleaseSprint(project);
         sprint.Pipeline = pipeline;
         sprint.CancelSprint();
