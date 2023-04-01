@@ -8,11 +8,6 @@ public class CancelledState : SprintState
     {
     }
 
-    public override void ToNextState()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void ReleaseSprint()
     {
         throw new IllegalStateAdvanceException();

@@ -11,11 +11,6 @@ public class ReviewState : SprintState
         Sprint = sprint;
     }
 
-    public override void ToNextState()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void ReleaseSprint()
     {
         throw new IllegalStateAdvanceException();

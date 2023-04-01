@@ -16,11 +16,6 @@ public class FinishedState : SprintState
         reviewSprint.SprintReview = review;
     }
 
-    public override void ToNextState()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void ReleaseSprint()
     {
         if (Sprint.GetType() != typeof(ReleaseSprint)) throw new IllegalStateAdvanceException();

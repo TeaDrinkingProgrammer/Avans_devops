@@ -1,3 +1,5 @@
+using Domain.Exceptions;
+
 namespace Domain.Sprints.SprintStates;
 
 public abstract class SprintState
@@ -28,7 +30,11 @@ public abstract class SprintState
     {
         throw new InvalidOperationException();
     }
-    public abstract void ToNextState();
+    
+    public virtual void ToNextState()
+    {
+        throw new IllegalStateAdvanceException();
+    }
     public abstract void ReleaseSprint();
     public  abstract void ReviewSprint();
     public abstract bool RunPipeline();
