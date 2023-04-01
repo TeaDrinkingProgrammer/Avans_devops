@@ -42,7 +42,7 @@ public class InProgressState : SprintState
 
     public override bool RunPipeline()
     {
-        throw new IllegalStateAdvanceException();
+        throw new InvalidOperationException();
     }
 
     public override void CancelSprint()
