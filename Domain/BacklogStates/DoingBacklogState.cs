@@ -13,11 +13,6 @@ public class DoingBacklogState : BacklogState
         _backlogItem.Sprint.Project.ScrumMaster.Notify($"Backlogitem {_backlogItem.Name} has been moved to Doing");
     }
 
-    public override void ToTodo()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void ToDoing()
     {
         CurrentBranchMessage();

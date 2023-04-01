@@ -10,21 +10,60 @@ public abstract class SprintState
         Sprint = sprint;
     }
 
-    public abstract void AddBacklogItem(BacklogItem backlogItem);
-
-    public abstract void RemoveBacklogItem(BacklogItem backlogItem);
-
     protected void AdvanceState(SprintState sprintState)
     {
-        sprintState.setState();
+        sprintState.SetState();
         Sprint.State = sprintState;
     }
+    protected void AddBacklogItemImpl(BacklogItem backlogItem)
+    {
+        if (Sprint.BacklogItems.Contains(backlogItem)) return;
+        
+        Sprint.BacklogItems.Add(backlogItem);
+        backlogItem.Sprint = Sprint;
+    }
+    
+    protected void RemoveBacklogItemImpl(BacklogItem backlogItem)
+    {
+        Sprint.BacklogItems.Remove(backlogItem);
+    }
+    public virtual void AddBacklogItem(BacklogItem backlogItem)
+    {
+        throw new InvalidOperationException();
+    }
+    public virtual void RemoveBacklogItem(BacklogItem backlogItem)
+    {
+        throw new InvalidOperationException();
+    }
 
-    public abstract void UploadReview(string review);
-    public abstract void ToNextState();
-    public abstract void ReleaseSprint();
-    public  abstract void ReviewSprint();
-    public abstract bool RunPipeline();
-    public abstract void CancelSprint();
-    public abstract void setState();
+    public virtual void UploadReview(string review)
+    {
+        throw new InvalidOperationException();
+    }
+
+    public virtual void ToNextState()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+
+    public virtual void ReleaseSprint()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+
+    public virtual void ReviewSprint()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+
+    public virtual bool RunPipeline()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+
+    public virtual void CancelSprint()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+    protected abstract void SetState();
 }

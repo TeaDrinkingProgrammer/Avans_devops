@@ -18,11 +18,6 @@ public class ReadyForTestingBacklogState : BacklogState
         AdvanceState(_backlogItem.TodoBacklogState);
     }
 
-    public override void ToDoing()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void ToReadyForTesting()
     {
         CurrentBranchMessage();
@@ -31,15 +26,5 @@ public class ReadyForTestingBacklogState : BacklogState
     public override void ToTesting()
     {
         AdvanceState(_backlogItem.TestingBacklogState);
-    }
-
-    public override void ToTested()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ToDone()
-    {
-        throw new IllegalStateAdvanceException();
     }
 }

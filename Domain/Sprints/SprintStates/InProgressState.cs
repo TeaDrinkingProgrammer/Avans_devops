@@ -10,19 +10,12 @@ public class InProgressState : SprintState
     
     public override void AddBacklogItem(BacklogItem backlogItem)
     {
-        if (Sprint.BacklogItems.Contains(backlogItem)) return;
-        
-        Sprint.BacklogItems.Add(backlogItem);
-        backlogItem.Sprint = Sprint;
+        AddBacklogItemImpl(backlogItem);
     }
+    
     public override void RemoveBacklogItem(BacklogItem backlogItem)
     {
-        Sprint.BacklogItems.Remove(backlogItem);
-    }
-
-    public override void UploadReview(string review)
-    {
-        throw new IllegalStateAdvanceException();
+        RemoveBacklogItemImpl(backlogItem);
     }
 
     public override void ToNextState()
@@ -30,27 +23,12 @@ public class InProgressState : SprintState
         AdvanceState(Sprint.FinishedState);
     }
 
-    public override void ReleaseSprint()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ReviewSprint()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override bool RunPipeline()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void CancelSprint()
     {
         AdvanceState(Sprint.CancelledState);
     }
 
-    public override void setState()
+    protected override void SetState()
     {
     }
 }

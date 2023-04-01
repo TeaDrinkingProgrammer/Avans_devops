@@ -26,26 +26,6 @@ public class DoneBacklogState : BacklogState
         _backlogItem.Discussion.Open();
     }
 
-    public override void ToDoing()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ToReadyForTesting()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ToTesting()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ToTested()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void ToDone()
     {
         CurrentBranchMessage();

@@ -20,7 +20,7 @@ public class DiscussionTest
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
-        var backlogItem = new BacklogItem("1", writer, sprint, user);
+        var backlogItem = new BacklogItem("1", writer, user);
         sprint.AddBacklogItem(backlogItem);
         
         backlogItem.ToDoing();
@@ -47,7 +47,7 @@ public class DiscussionTest
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
-        var backlogItem = new BacklogItem("1", writer, sprint, user);
+        var backlogItem = new BacklogItem("1", writer, user);
         sprint.AddBacklogItem(backlogItem);
         
         backlogItem.ToDoing();
@@ -75,7 +75,7 @@ public class DiscussionTest
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
         
-        var backlogItem = new BacklogItem("1", writer, sprint, user);
+        var backlogItem = new BacklogItem("1", writer, user);
         sprint.AddBacklogItem(backlogItem);
         
         backlogItem.ToDoing();
