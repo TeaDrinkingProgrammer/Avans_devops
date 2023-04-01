@@ -9,16 +9,6 @@ public class ReleasedState : SprintState
     {
         Sprint = sprint;
     }
-    
-    public override void AddBacklogItem(BacklogItem backlogItem)
-    {
-        throw new InvalidOperationException();
-    }
-    
-    public override void RemoveBacklogItem(BacklogItem backlogItem)
-    {
-        throw new InvalidOperationException();
-    }
 
     public override void UploadReview(string review)
     {

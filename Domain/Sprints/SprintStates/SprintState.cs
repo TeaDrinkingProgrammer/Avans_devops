@@ -10,9 +10,15 @@ public abstract class SprintState
         Sprint = sprint;
     }
 
-    public abstract void AddBacklogItem(BacklogItem backlogItem);
+    public virtual void AddBacklogItem(BacklogItem backlogItem)
+    {
+        throw new InvalidOperationException();
+    }
 
-    public abstract void RemoveBacklogItem(BacklogItem backlogItem);
+    public virtual void RemoveBacklogItem(BacklogItem backlogItem)
+    {
+        throw new InvalidOperationException();
+    }
 
     protected void AdvanceState(SprintState sprintState)
     {

@@ -7,16 +7,7 @@ public class FinishedState : SprintState
     public FinishedState(Sprint sprint) : base(sprint)
     {
     }
-    
-    public override void AddBacklogItem(BacklogItem backlogItem)
-    {
-        throw new InvalidOperationException();
-    }
-    public override void RemoveBacklogItem(BacklogItem backlogItem)
-    {
-        throw new InvalidOperationException();
-    }
-    
+
     public override void UploadReview(string review)
     {
         if (Sprint.GetType() != typeof(ReviewSprint)) throw new IllegalStateAdvanceException();

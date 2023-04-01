@@ -7,14 +7,6 @@ public class CancelledState : SprintState
     public CancelledState(Sprint sprint) : base(sprint)
     {
     }
-    public override void AddBacklogItem(BacklogItem backlogItem)
-    {
-        throw new InvalidOperationException();
-    }
-    public override void RemoveBacklogItem(BacklogItem backlogItem)
-    {
-        throw new InvalidOperationException();
-    }
 
     public override void UploadReview(string review)
     {
