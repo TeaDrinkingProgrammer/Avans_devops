@@ -44,7 +44,7 @@ public class FinishedState : SprintState
         AdvanceState(Sprint.CancelledState);
     }
 
-    public override void setState()
+    protected override void SetState()
     {
     }
 }

@@ -10,7 +10,7 @@ public class ReleasedState : SprintState
         Sprint = sprint;
     }
 
-    public override void setState()
+    protected override void SetState()
     {
         Sprint.Project.ScrumMaster.Notify("Sprint has been released");
         Sprint.Project.ProductOwner.Notify("Sprint has been released");

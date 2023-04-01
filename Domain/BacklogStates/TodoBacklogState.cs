@@ -21,24 +21,4 @@ public class TodoBacklogState : BacklogState
     {
         AdvanceState(_backlogItem.DoingBacklogState);
     }
-
-    public override void ToReadyForTesting()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ToTesting()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ToTested()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ToDone()
-    {
-        throw new IllegalStateAdvanceException();
-    }
 }

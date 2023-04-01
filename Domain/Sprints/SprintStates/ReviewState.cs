@@ -11,7 +11,7 @@ public class ReviewState : SprintState
         Sprint = sprint;
     }
 
-    public override void setState()
+    protected override void SetState()
     {
         if (Sprint.SprintReview == null)
         {

@@ -16,13 +16,35 @@ public abstract class BacklogState
     }
 
     public abstract void SetState();
-    public abstract void ToTodo();
-    public abstract void ToDoing();
+    public virtual void ToTodo()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+    public virtual void ToDoing()
+    {
+        throw new IllegalStateAdvanceException();
+    }
 
-    public abstract void ToReadyForTesting();
-    public abstract void ToTesting();
-    public abstract void ToTested();
-    public abstract void ToDone();
+    public virtual void ToReadyForTesting()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+    
+    public virtual void ToTesting()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+
+    public virtual void ToTested()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+
+    public virtual void ToDone()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+    
     protected void CurrentBranchMessage()
     {
         throw new IllegalStateAdvanceException($"This backlog item is already in {StateName}");

@@ -10,14 +10,12 @@ public class PlannedState : SprintState
     
     public override void AddBacklogItem(BacklogItem backlogItem)
     {
-        if (Sprint.BacklogItems.Contains(backlogItem)) return;
-        
-        Sprint.BacklogItems.Add(backlogItem);
-        backlogItem.Sprint = Sprint;
+        AddBacklogItemImpl(backlogItem);
     }
+    
     public override void RemoveBacklogItem(BacklogItem backlogItem)
     {
-        Sprint.BacklogItems.Remove(backlogItem);
+        RemoveBacklogItemImpl(backlogItem);
     }
 
     public override void ToNextState()
@@ -30,7 +28,7 @@ public class PlannedState : SprintState
         AdvanceState(Sprint.CancelledState);
     }
 
-    public override void setState()
+    protected override void SetState()
     {
     }
 }
