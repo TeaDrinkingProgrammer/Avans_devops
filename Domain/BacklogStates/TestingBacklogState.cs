@@ -1,6 +1,6 @@
 using Domain.Exceptions;
 
-namespace Domain;
+namespace Domain.BacklogStates;
 
 public class TestingBacklogState : BacklogState
 {
@@ -19,7 +19,7 @@ public class TestingBacklogState : BacklogState
 
     public override void ToTested()
     {
-        AdvanceState(_backlogItem.TestedBacklogState);
+        AdvanceState(BacklogItem.TestedBacklogState);
     }
 
     public override void ToDone()

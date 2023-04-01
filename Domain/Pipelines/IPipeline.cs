@@ -2,7 +2,7 @@
 
 public interface IPipeline
 {
-    public List<Task> tasks { get; set; }
+    public List<Task> Tasks { get; set; }
     public bool Run();
     public void Accept(IVisitor visitor);
 }

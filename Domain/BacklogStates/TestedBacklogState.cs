@@ -1,6 +1,4 @@
-using Domain.Exceptions;
-
-namespace Domain;
+namespace Domain.BacklogStates;
 
 public class TestedBacklogState : BacklogState
 {
@@ -15,7 +13,7 @@ public class TestedBacklogState : BacklogState
 
     public override void ToReadyForTesting()
     {
-        AdvanceState(_backlogItem.ReadyForTestingBacklogState);
+        AdvanceState(BacklogItem.ReadyForTestingBacklogState);
     }
 
     public override void ToTested()
@@ -25,6 +23,6 @@ public class TestedBacklogState : BacklogState
 
     public override void ToDone()
     {
-        AdvanceState(_backlogItem.DoneBacklogState);
+        AdvanceState(BacklogItem.DoneBacklogState);
     }
 }

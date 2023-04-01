@@ -12,13 +12,13 @@ public class DiscussionTest
     public void TeamMemberShouldBeAbleToReplyToDiscussion()
     {
         var writer = Substitute.For<IWriter>();
-        var notificationWriter = Substitute.For<IWriter>();
+
         var user = new TeamMember("Linus Torvalds");
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprintFactory = new SprintFactory();
-        var sprint = sprintFactory.NewReleaseSprint(project);
+        var sprint = SprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, user);
         sprint.AddBacklogItem(backlogItem);
@@ -39,13 +39,13 @@ public class DiscussionTest
     public void TeamMemberShouldNotBeAbleToReplyToDiscussionWhenBacklogItemIsDone()
     {
         var writer = Substitute.For<IWriter>();
-        var notificationWriter = Substitute.For<IWriter>();
+        
         var user = new TeamMember("Linus Torvalds");
         
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprintFactory = new SprintFactory();
-        var sprint = sprintFactory.NewReleaseSprint(project);
+        var sprint = SprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, user);
         sprint.AddBacklogItem(backlogItem);
@@ -73,7 +73,7 @@ public class DiscussionTest
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
         var sprintFactory = new SprintFactory();
-        var sprint = sprintFactory.NewReleaseSprint(project);
+        var sprint = SprintFactory.NewReleaseSprint(project);
         
         var backlogItem = new BacklogItem("1", writer, user);
         sprint.AddBacklogItem(backlogItem);

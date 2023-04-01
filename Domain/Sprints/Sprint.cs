@@ -1,4 +1,3 @@
-using Domain.Notifier.Events;
 using Domain.Sprints.Export;
 using Domain.Pipelines;
 using Domain.Sprints.SprintStates;

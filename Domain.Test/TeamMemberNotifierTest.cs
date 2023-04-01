@@ -1,6 +1,4 @@
-using System.Diagnostics;
 using Domain.Notifier;
-using Domain.Sprints;
 using NSubstitute;
 
 namespace Domain.Test;
@@ -13,10 +11,8 @@ public class TeamMemberNotifierTest
         var writer = Substitute.For<IWriter>();
 
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
-        var sprint = sprintFactory.NewReleaseSprint(project);
-        
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
+
         var notificationService = new NotificationService(new EmailService(writer), new SlackService(writer));
         project.ScrumMaster.Subscribe(notificationService);
         project.ScrumMaster.Notify("Hello scrummaster!");
@@ -30,10 +26,8 @@ public class TeamMemberNotifierTest
         var writer = Substitute.For<IWriter>();
 
         var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        var sprintFactory = new SprintFactory();
-        var sprint = sprintFactory.NewReleaseSprint(project);
-        
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
+
         var notificationService = new NotificationService(new EmailService(writer), new SlackService(writer));
         var unsubscriber = project.ScrumMaster.Subscribe(notificationService);
         unsubscriber.Dispose();

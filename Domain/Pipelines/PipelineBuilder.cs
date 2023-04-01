@@ -16,7 +16,7 @@ public class PipelineBuilder
     
     public PipelineBuilder AddTask(Task task)
     {
-        _pipeline.tasks.Add(task);
+        _pipeline.Tasks.Add(task);
         return this;
     }
 

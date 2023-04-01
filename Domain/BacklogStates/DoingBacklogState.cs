@@ -1,6 +1,6 @@
 using Domain.Exceptions;
 
-namespace Domain;
+namespace Domain.BacklogStates;
 
 public class DoingBacklogState : BacklogState
 {
@@ -10,7 +10,7 @@ public class DoingBacklogState : BacklogState
 
     public override void SetState()
     {
-        _backlogItem.Sprint.Project.ScrumMaster.Notify($"Backlogitem {_backlogItem.Name} has been moved to Doing");
+        BacklogItem.Sprint.Project.ScrumMaster.Notify($"Backlogitem {BacklogItem.Name} has been moved to Doing");
     }
 
     public override void ToDoing()
@@ -20,7 +20,7 @@ public class DoingBacklogState : BacklogState
 
     public override void ToReadyForTesting()
     {
-        AdvanceState(_backlogItem.ReadyForTestingBacklogState);
+        AdvanceState(BacklogItem.ReadyForTestingBacklogState);
     }
 
     public override void ToTesting()

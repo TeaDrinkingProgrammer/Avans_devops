@@ -1,6 +1,6 @@
 ﻿namespace Domain.Notifier;
 
-public interface MessagingService
+public interface IMessagingService
 {
     public void Send(string receiver, string message);
 }

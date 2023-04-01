@@ -1,6 +1,6 @@
 ﻿namespace Domain.Notifier;
 
-public class SlackService : MessagingService
+public class SlackService : IMessagingService
 {
     private readonly IWriter _writer;
 

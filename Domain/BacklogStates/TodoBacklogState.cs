@@ -1,6 +1,4 @@
-using Domain.Exceptions;
-
-namespace Domain;
+namespace Domain.BacklogStates;
 
 public class TodoBacklogState : BacklogState
 {
@@ -19,6 +17,6 @@ public class TodoBacklogState : BacklogState
 
     public override void ToDoing()
     {
-        AdvanceState(_backlogItem.DoingBacklogState);
+        AdvanceState(BacklogItem.DoingBacklogState);
     }
 }

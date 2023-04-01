@@ -1,6 +1,6 @@
 using Domain.Exceptions;
 
-namespace Domain;
+namespace Domain.BacklogStates;
 
 public class DoneBacklogState : BacklogState
 {
@@ -9,21 +9,21 @@ public class DoneBacklogState : BacklogState
     }
     public override void SetState()
     {
-        foreach (var activity in _backlogItem.Activities)
+        foreach (var activity in BacklogItem.Activities)
         {
             if (activity.State.GetType() != typeof(DoneBacklogState))
             {
                 throw new IllegalStateAdvanceException($"Cannot move backlogitem to Done: activity {activity.Name} is not done yet.");
             }
         }
-        _backlogItem.Discussion.Close();
+        BacklogItem.Discussion.Close();
     }
 
     public override void ToTodo()
     {
-        _backlogItem.Sprint.Project.ScrumMaster.Notify($"Backlogitem {_backlogItem.Name} has been moved from Done to Todo");
-        AdvanceState(_backlogItem.TodoBacklogState);
-        _backlogItem.Discussion.Open();
+        BacklogItem.Sprint.Project.ScrumMaster.Notify($"Backlogitem {BacklogItem.Name} has been moved from Done to Todo");
+        AdvanceState(BacklogItem.TodoBacklogState);
+        BacklogItem.Discussion.Open();
     }
 
     public override void ToDone()

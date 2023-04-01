@@ -1,5 +1,3 @@
-using Domain.Exceptions;
-
 namespace Domain.Sprints.SprintStates;
 
 public class CancelledState : SprintState

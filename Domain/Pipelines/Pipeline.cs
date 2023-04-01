@@ -2,14 +2,14 @@
 
 public class Pipeline : IPipeline
 {
-    public List<Task> tasks { get; set; }
+    public List<Task> Tasks { get; set; }
     public readonly string Name;
     private readonly IVisitor _visitor;
 
     public Pipeline(string name, IVisitor visitor)
     {
         Name = name;
-        tasks = new List<Task>();
+        Tasks = new List<Task>();
         
         _visitor = visitor;
     }
@@ -30,7 +30,7 @@ public class Pipeline : IPipeline
     public void Accept(IVisitor visitor)
     {
         visitor.VisitPipeline(this);
-        foreach (var task in tasks)
+        foreach (var task in Tasks)
         {
             task.Accept(visitor);
         }

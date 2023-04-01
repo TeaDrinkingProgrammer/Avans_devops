@@ -27,7 +27,7 @@ public class SprintReportBuilder
     }
     public void AddBacklogItemsList()
     {
-        var visitor = new BacklogItemsListVisitor(Sprint);
+        var visitor = new BacklogItemsListVisitor();
         Sprint.Accept(visitor);
         
         Body.Add("--------------------BacklogItems--------------------");
