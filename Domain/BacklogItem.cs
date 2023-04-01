@@ -1,3 +1,4 @@
+using Domain.Branches;
 using Domain.Forum;
 using Domain.Sprints;
 
@@ -7,7 +8,16 @@ public class BacklogItem
 {
     public string Name { get; set; }
     public TeamMember Developer { get; set; }
-    
+    private IBranch? _branch;
+    public IBranch Branch
+    {
+        get => _branch;
+        set
+        {
+            _branch = value;
+            _branch.pull();
+        }
+    }
     public ICollection<BacklogItem> Activities { get; set; } = new List<BacklogItem>();
 
     public Sprint Sprint { get; set; }
