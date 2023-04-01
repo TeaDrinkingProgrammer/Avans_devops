@@ -35,8 +35,15 @@ public abstract class SprintState
     {
         throw new IllegalStateAdvanceException();
     }
-    public abstract void ReleaseSprint();
-    public  abstract void ReviewSprint();
+    public virtual void ReleaseSprint()
+    {
+        throw new IllegalStateAdvanceException();
+    }
+
+    public virtual void ReviewSprint()
+    {
+        throw new IllegalStateAdvanceException();
+    }
     public abstract bool RunPipeline();
     public abstract void CancelSprint();
     public abstract void setState();

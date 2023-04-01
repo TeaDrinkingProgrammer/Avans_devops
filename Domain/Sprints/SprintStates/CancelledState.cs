@@ -8,16 +8,6 @@ public class CancelledState : SprintState
     {
     }
 
-    public override void ReleaseSprint()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public override void ReviewSprint()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override bool RunPipeline()
     {
         throw new InvalidOperationException();
