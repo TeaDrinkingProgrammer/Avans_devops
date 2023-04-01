@@ -7,12 +7,12 @@ public class ReadyForTestingBacklogState : BacklogState
     }
     public override void SetState()
     {
-        BacklogItem.Sprint.Project.Tester.Notify($"Backlogitem {BacklogItem.Name} is ready for testing");
+        BacklogItem.Sprint?.Project.Tester.Notify($"Backlogitem {BacklogItem.Name} is ready for testing");
     }
 
     public override void ToTodo()
     {
-        BacklogItem.Sprint.Project.ScrumMaster.Notify($"Backlogitem {BacklogItem.Name} has been moved from Ready For Testing to Todo");
+        BacklogItem.Sprint?.ScrumMaster.Notify($"Backlogitem {BacklogItem.Name} has been moved from Ready For Testing to Todo");
         AdvanceState(BacklogItem.TodoBacklogState);
     }
 

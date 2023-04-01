@@ -1,3 +1,4 @@
+using Domain.Pipelines;
 using Domain.Sprints.SprintStates;
 
 namespace Domain.Sprints;
@@ -6,7 +7,7 @@ public class ReviewSprint : Sprint
 {
     public string? SprintReview { get; set; }
     public ReviewState ReviewState { get;}
-    public ReviewSprint(DateOnly date, Project project) : base(date, project)
+    public ReviewSprint(Project project, TeamMember scrumMaster, IPipeline? pipeline) : base(project, scrumMaster, pipeline)
     {
         ReviewState = new ReviewState(this);
     }

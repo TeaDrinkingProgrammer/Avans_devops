@@ -46,5 +46,6 @@ public class FinishedState : SprintState
 
     protected override void SetState()
     {
+        Sprint.ScrumMaster.Notify("Sprint is finished");
     }
 }

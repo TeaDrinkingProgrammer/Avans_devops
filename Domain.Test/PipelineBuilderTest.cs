@@ -5,6 +5,8 @@ namespace Domain.Test;
 
 public class PipelineBuilderTest
 {
+    //FR-23
+    //FR-24
     [Fact] private void PipelineBuilderShouldCreateTasks()
     {
         var pipelineWriter = Substitute.For<IWriter>();

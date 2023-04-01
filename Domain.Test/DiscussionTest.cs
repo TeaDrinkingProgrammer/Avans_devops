@@ -6,6 +6,7 @@ using NSubstitute;
 
 namespace Domain.Test;
 
+//FR-16.1
 public class DiscussionTest
 {
     [Fact]
@@ -15,10 +16,9 @@ public class DiscussionTest
 
         var user = new TeamMember("Linus Torvalds");
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprintFactory = new SprintFactory();
-        var sprint = SprintFactory.NewReleaseSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         
         var backlogItem = new BacklogItem("1", writer, user);
         sprint.AddBacklogItem(backlogItem);
@@ -35,6 +35,7 @@ public class DiscussionTest
         Assert.Single(backlogItem.Discussion.Replies);
         Assert.Equal("Hi there", backlogItem.Discussion.Replies[0].Content);
     }
+    //FR-17.1
     [Fact]
     public void TeamMemberShouldNotBeAbleToReplyToDiscussionWhenBacklogItemIsDone()
     {
@@ -42,10 +43,9 @@ public class DiscussionTest
         
         var user = new TeamMember("Linus Torvalds");
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-
-        var sprint = SprintFactory.NewReleaseSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         
         var backlogItem = new BacklogItem("1", writer, user);
         sprint.AddBacklogItem(backlogItem);
@@ -61,6 +61,8 @@ public class DiscussionTest
         Assert.Empty(backlogItem.Discussion.Replies);
     }
     
+    //FR-16.2
+    //FR18
     [Fact]
     public void TeamMembersThatHaveRepliedToADiscussionShouldBeNotifiedWhenThereIsANewReply()
     {
@@ -70,10 +72,9 @@ public class DiscussionTest
         var user = new TeamMember("Linus Torvalds", "linustorvalds@gmail.com");
         var user2 = new TeamMember("John Doe", "johndoe@gmail.com");
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-
-        var sprint = SprintFactory.NewReleaseSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         
         var backlogItem = new BacklogItem("1", writer, user);
         sprint.AddBacklogItem(backlogItem);

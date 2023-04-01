@@ -6,13 +6,13 @@ namespace Domain.Sprints;
 
 public abstract class Sprint : ISprintVisitable
 {
-    private readonly DateOnly _date;
-
+    //FR-5.2
     public Project Project { get; }
+    public TeamMember ScrumMaster { get; set; }
     
-    public IPipeline? Pipeline { get; set; }
+    public IPipeline? Pipeline { get;}
 
-    public ICollection<BacklogItem> BacklogItems { get; set; } = new List<BacklogItem>();
+    public ICollection<BacklogItem> BacklogItems { get;} = new List<BacklogItem>();
     
     public SprintState State { get; set; }
     public PlannedState PlannedState { get; }
@@ -20,11 +20,13 @@ public abstract class Sprint : ISprintVisitable
     public FinishedState FinishedState { get; }
     public CancelledState CancelledState { get; }
     
-    protected Sprint(DateOnly date, Project project)
+    protected Sprint(Project project, TeamMember scrumMaster, IPipeline? pipeline)
     {
-        _date = date;
         Project = project;
+        Pipeline = pipeline;
+        ScrumMaster = scrumMaster;
         
+        //FR-5.3
         PlannedState = new PlannedState(this);
         InProgressState = new InProgressState(this);
         FinishedState = new FinishedState(this);

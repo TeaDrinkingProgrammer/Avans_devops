@@ -8,15 +8,16 @@ using NSubstitute;
 
 namespace Domain.Test;
 
+//FR-5.1
 public class SprintStateTest
 {
     [Fact]
     public void SprintShouldHaveReviewStateAfterCallingReviewSprintOnFinishedStateOnAReviewSprint()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
                     new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.UploadReview("Sprint review");
@@ -29,9 +30,9 @@ public class SprintStateTest
     public void SprintShouldThrowIllegalStateAdvanceExceptionAfterCallingReviewOnFinishedStateWithoutSprintReview()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         sprint.ToNextState();
         sprint.ToNextState();
         //Act
@@ -41,18 +42,18 @@ public class SprintStateTest
             () => sprint.Review());
     }
     
+    //FR-6
     [Fact]
     public void SprintShouldHaveReleaseStateAfterCallingReleaseOnFinishedStateOnAReleaseSprint()
     {
         //Arrange
         var pipeline = Substitute.For<IPipeline>();
-        
         pipeline.Run().Returns(true);
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
-        sprint.Pipeline = pipeline;
         
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), pipeline);
+
         sprint.ToNextState();
         sprint.ToNextState();
         //Act
@@ -67,14 +68,14 @@ public class SprintStateTest
         var scrumMasterWriter = Substitute.For<IWriter>();
         var productOwnerWriter = Substitute.For<IWriter>();
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         
         var scrumMasterNotificationService = new NotificationService(new EmailService(scrumMasterWriter), new SlackService(scrumMasterWriter));
         var productOwnerNotificationService = new NotificationService(new EmailService(productOwnerWriter), new SlackService(productOwnerWriter));
 
-        project.ScrumMaster.Subscribe(scrumMasterNotificationService);
+        sprint.ScrumMaster.Subscribe(scrumMasterNotificationService);
         project.ProductOwner.Subscribe(productOwnerNotificationService);
         
         //Act
@@ -85,6 +86,30 @@ public class SprintStateTest
         productOwnerWriter.Received().WriteLine("To: Jan de Productowner <jandeproductowner@gmail.com>: Sprint has been cancelled");
     }
     [Fact]
+    public void ScrumMasterShouldGetNotificationWhenSprintIsFinished()
+    {
+        //Arrange
+        var scrumMasterWriter = Substitute.For<IWriter>();
+        var productOwnerWriter = Substitute.For<IWriter>();
+        
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
+        
+        var scrumMasterNotificationService = new NotificationService(new EmailService(scrumMasterWriter), new SlackService(scrumMasterWriter));
+        var productOwnerNotificationService = new NotificationService(new EmailService(productOwnerWriter), new SlackService(productOwnerWriter));
+
+        sprint.ScrumMaster.Subscribe(scrumMasterNotificationService);
+        project.ProductOwner.Subscribe(productOwnerNotificationService);
+        
+        //Act
+        sprint.ToNextState();
+        sprint.ToNextState();
+
+        //Assert
+        scrumMasterWriter.Received().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Sprint is finished");
+    }
+    [Fact]
     public void ScrumMasterAndOwnerShouldGetNotificationWhenSprintHasBeenReleased()
     {
         //Arrange
@@ -93,15 +118,14 @@ public class SprintStateTest
         var pipeline = Substitute.For<IPipeline>();
         pipeline.Run().Returns(true);
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
-        sprint.Pipeline = pipeline;
-        
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), pipeline);
+
         var scrumMasterNotificationService = new NotificationService(new EmailService(scrumMasterWriter), new SlackService(scrumMasterWriter));
         var productOwnerNotificationService = new NotificationService(new EmailService(productOwnerWriter), new SlackService(productOwnerWriter));
         
-        project.ScrumMaster.Subscribe(scrumMasterNotificationService);
+        sprint.ScrumMaster.Subscribe(scrumMasterNotificationService);
         project.ProductOwner.Subscribe(productOwnerNotificationService);
         
         sprint.ToNextState();
@@ -115,13 +139,14 @@ public class SprintStateTest
         productOwnerWriter.Received().WriteLine("To: Jan de Productowner <jandeproductowner@gmail.com>: Sprint has been released");
     }
 
+    //FR-13.1
     [Fact]
     public void ShouldAddBacklogItemToReviewSprintInPlannedState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
         //Act
@@ -131,13 +156,14 @@ public class SprintStateTest
         Assert.Contains(item, sprint.BacklogItems);
     }
     
+    //FR-13.1
     [Fact]
     public void ShouldAddBacklogItemToReleaseSprintInPlannedState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
         //Act
@@ -147,50 +173,48 @@ public class SprintStateTest
         Assert.Contains(item, sprint.BacklogItems);
     }
     
+    //FR-7.1
+    //FR-13.1
     [Fact]
-    public void ShouldAddBacklogItemToReviewSprintInInProgressState()
+    public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenAddingBacklogItemsInInProgressState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
-        var item = new BacklogItem("", Substitute.For<IWriter>(),
-            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
-        
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         sprint.ToNextState();
         //Act
-        sprint.AddBacklogItem(item);
 
         //Assert
-        Assert.Contains(item, sprint.BacklogItems);
+        Assert.Throws<InvalidOperationException>(
+            () => sprint.AddBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
     }
     
+    //FR-7.1
+    //FR-13.1
     [Fact]
-    public void ShouldAddBacklogItemToReleaseSprintInProgressState()
+    public void SprintShouldThrowInvalidOperationExceptionOnReleaseSprintWhenAddingBacklogItemsInInProgressState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com")); 
-        
-        var sprint = SprintFactory.NewReleaseSprint(project);
-        var item = new BacklogItem("", Substitute.For<IWriter>(),
-            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
-        
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         sprint.ToNextState();
         //Act
-        sprint.AddBacklogItem(item);
 
         //Assert
-        Assert.Contains(item, sprint.BacklogItems);
+        Assert.Throws<InvalidOperationException>(
+            () => sprint.AddBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
     }
+    
 
     [Fact]
     public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenAddingBacklogItemsInFinishedState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         sprint.ToNextState();
         sprint.ToNextState();
         //Act
@@ -200,13 +224,14 @@ public class SprintStateTest
             () => sprint.AddBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
     }
     
+
     [Fact]
     public void SprintShouldThrowInvalidOperationExceptionOnReleaseSprintWhenAddingBacklogItemsInFinishedState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         sprint.ToNextState();
         sprint.ToNextState();
         //Act
@@ -215,14 +240,14 @@ public class SprintStateTest
         Assert.Throws<InvalidOperationException>(
             () => sprint.AddBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
     }
-    
+
     [Fact]
     public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenAddingBacklogItemsInReviewState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.UploadReview("test review");
@@ -241,10 +266,10 @@ public class SprintStateTest
         var pipeline = Substitute.For<IPipeline>();
         pipeline.Run().Returns(true);
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
-        sprint.Pipeline = pipeline;
+                var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), pipeline);
+
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.Release();
@@ -254,14 +279,14 @@ public class SprintStateTest
         Assert.Throws<InvalidOperationException>(
             () => sprint.AddBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
     }
-    
+
     [Fact]
     public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenAddingBacklogItemsCancelledState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.CancelSprint();
@@ -271,13 +296,13 @@ public class SprintStateTest
         Assert.Throws<InvalidOperationException>(
             () => sprint.AddBacklogItem(new BacklogItem("", Substitute.For<IWriter>(), new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"))));
     }
-    
+
     [Fact]
     public void SprintShouldThrowInvalidOperationExceptionOnReleaseSprintWhenAddingBacklogItemsInCancelledState() {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.CancelSprint();
@@ -292,9 +317,9 @@ public class SprintStateTest
     public void ShouldRemoveBacklogItemFromReviewSprintInPlannedState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
         //Act
@@ -309,54 +334,15 @@ public class SprintStateTest
     public void ShouldRemoveBacklogItemFromReleaseSprintInPlannedState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         var item = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
         //Act
         sprint.AddBacklogItem(item);
         sprint.RemoveBacklogItem(item);
 
-        //Assert
-        Assert.DoesNotContain(item, sprint.BacklogItems);
-    }
-    
-    [Fact]
-    public void ShouldARemoveBacklogItemToReviewSprintInInProgressState()
-    {
-        //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
-        var item = new BacklogItem("", Substitute.For<IWriter>(),
-            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
-        
-        sprint.ToNextState();
-        //Act
-        sprint.AddBacklogItem(item);
-        sprint.RemoveBacklogItem(item);
-
-        //Assert
-        Assert.DoesNotContain(item, sprint.BacklogItems);
-    }
-    
-    [Fact]
-    public void ShouldRemoveBacklogItemFromReleaseSprintInProgressState()
-    {
-        //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
-        var item = new BacklogItem("", Substitute.For<IWriter>(),
-            new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
-        
-        sprint.ToNextState();
-        
-        //Act
-        sprint.AddBacklogItem(item);
-        sprint.RemoveBacklogItem(item);
-        
         //Assert
         Assert.DoesNotContain(item, sprint.BacklogItems);
     }
@@ -365,9 +351,9 @@ public class SprintStateTest
     public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenRemovingBacklogItemsInFinishedState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         
         var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -386,9 +372,9 @@ public class SprintStateTest
     public void SprintShouldThrowInvalidOperationExceptionOnReleaseSprintWhenRemovingBacklogItemsInFinishedState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         
         var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -407,9 +393,9 @@ public class SprintStateTest
     public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenRemovingBacklogItemsInReviewState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         
         var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -433,15 +419,14 @@ public class SprintStateTest
         var pipeline = Substitute.For<IPipeline>();
         pipeline.Run().Returns(true);
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
+                var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), pipeline);
         
         var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
         sprint.AddBacklogItem(backlogItem);
         
-        sprint.Pipeline = pipeline;
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.Release();
@@ -456,9 +441,9 @@ public class SprintStateTest
     public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenRemovingBacklogItemsCancelledState()
     {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         
         var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -477,9 +462,9 @@ public class SprintStateTest
     [Fact]
     public void SprintShouldThrowInvalidOperationExceptionOnReleaseSprintWhenRemovingBacklogItemsInCancelledState() {
         //Arrange
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         
         var backlogItem = new BacklogItem("", Substitute.For<IWriter>(),
             new TeamMember("Linus Torvalds", "linustorvalds@gmail.com"));
@@ -499,10 +484,10 @@ public class SprintStateTest
     public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenUploadingReviewInPlannedState()
     {
         //Arrange
-        var project = new Project("SO&A 2", new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
+        var project = new Project("SO&A 2",
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         //Act
 
         //Assert
@@ -514,10 +499,10 @@ public class SprintStateTest
     public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenUploadingReviewInInProgressState()
     {
         //Arrange
-        var project = new Project("SO&A 2", new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
+        var project = new Project("SO&A 2",
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var sprint = SprintFactory.NewReviewSprint(project,new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         sprint.ToNextState();
         //Act
 
@@ -530,10 +515,10 @@ public class SprintStateTest
     public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenUploadingReviewInReviewState()
     {
         //Arrange
-        var project = new Project("SO&A 2", new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
+        var project = new Project("SO&A 2",
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.UploadReview("test review");
@@ -549,10 +534,10 @@ public class SprintStateTest
     public void SprintShouldThrowInvalidOperationExceptionOnReviewSprintWhenUploadingReviewInCancelledState()
     {
         //Arrange
-        var project = new Project("SO&A 2", new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"),
+        var project = new Project("SO&A 2",
             new TeamMember("Henk de Testerman", "henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.CancelSprint();
@@ -570,10 +555,9 @@ public class SprintStateTest
         var pipeline = Substitute.For<IPipeline>();
         pipeline.Run().Returns(true);
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
-        sprint.Pipeline = pipeline;
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
 
         //Assert
         Assert.Throws<InvalidOperationException>(() => sprint.RunPipeline());
@@ -586,10 +570,9 @@ public class SprintStateTest
         var pipeline = Substitute.For<IPipeline>();
         pipeline.Run().Returns(true);
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
-        sprint.Pipeline = pipeline;
+                var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
 
         //Assert
         Assert.Throws<InvalidOperationException>(() => sprint.RunPipeline());
@@ -602,10 +585,9 @@ public class SprintStateTest
         var pipeline = Substitute.For<IPipeline>();
         pipeline.Run().Returns(true);
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
-        sprint.Pipeline = pipeline;
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         sprint.ToNextState();
 
         //Assert
@@ -619,10 +601,9 @@ public class SprintStateTest
         var pipeline = Substitute.For<IPipeline>();
         pipeline.Run().Returns(true);
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
-        sprint.Pipeline = pipeline;
+                var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         sprint.ToNextState();
 
         //Assert
@@ -633,11 +614,10 @@ public class SprintStateTest
     public void ShouldThrowIllegalStateAdvanceExceptionOnReviewSprintWhenRunningPipelineWithNullReferenceInInFinishedState()
     {
         //Arrange
-
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
-
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
+        
         sprint.ToNextState();
         sprint.ToNextState();
 
@@ -649,10 +629,9 @@ public class SprintStateTest
     public void ShouldThrowIllegalStateAdvanceExceptionOnReleaseSprintWhenRunningPipelineWithNullReferenceInInFinishedState()
     {
         //Arrange
-
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
             new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"));
         
         sprint.ToNextState();
         sprint.ToNextState();
@@ -668,10 +647,10 @@ public class SprintStateTest
         var pipeline = Substitute.For<IPipeline>();
         pipeline.Run().Returns(true);
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
-        sprint.Pipeline = pipeline;
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
+        
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.UploadReview("test review");
@@ -688,10 +667,9 @@ public class SprintStateTest
         var pipeline = Substitute.For<IPipeline>();
         pipeline.Run().Returns(true);
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
-        sprint.Pipeline = pipeline;
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), pipeline);
         sprint.ToNextState();
         sprint.ToNextState();
         sprint.Release();
@@ -707,10 +685,9 @@ public class SprintStateTest
         var pipeline = Substitute.For<IPipeline>();
         pipeline.Run().Returns(true);
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReviewSprint(project);
-        sprint.Pipeline = pipeline;
+                var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         sprint.ToNextState();
 
         //Assert
@@ -724,13 +701,29 @@ public class SprintStateTest
         var pipeline = Substitute.For<IPipeline>();
         pipeline.Run().Returns(true);
         
-        var project = new Project("SO&A 2",new TeamMember("Jan de Scrumman","jandescrumman@gmail.com"), new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
-            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
-        var sprint = SprintFactory.NewReleaseSprint(project);
-        sprint.Pipeline = pipeline;
+                var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
         sprint.CancelSprint();
 
         //Assert
         Assert.Throws<InvalidOperationException>(() => sprint.RunPipeline());
+    }
+    //FR-15
+    [Fact]
+    public void ShouldThrowInvalidOperationExceptionOnReviewStateWhenThereIsNoReview()
+    {
+        //Arrange
+        var pipeline = Substitute.For<IPipeline>();
+        pipeline.Run().Returns(true);
+        
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner"));
+        var sprint = SprintFactory.NewReviewSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"));
+        sprint.ToNextState();
+        sprint.ToNextState();
+
+        //Assert
+        Assert.Throws<IllegalStateAdvanceException>(() => sprint.Review());
     }
 }
