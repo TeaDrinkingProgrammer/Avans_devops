@@ -2,6 +2,7 @@ using Domain.Exceptions;
 
 namespace Domain.Sprints.SprintStates;
 
+//Pattern used: State
 public abstract class SprintState
 {
     protected Sprint Sprint { get; }

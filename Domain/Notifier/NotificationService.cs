@@ -2,6 +2,7 @@
 
 namespace Domain.Notifier;
 
+//Pattern used: Observer
 public class NotificationService : IObserver<Notification>
 {
     private readonly EmailService _emailService;

@@ -2,6 +2,7 @@ using Domain.Exceptions;
 
 namespace Domain.BacklogStates;
 
+//Pattern used: State
 public abstract class BacklogState
 {
     private readonly IWriter _writer;

@@ -2,6 +2,7 @@ using System.Text;
 
 namespace Domain.Sprints.Export;
 
+//Pattern used: Builder
 public class SprintReportBuilder
 {
     private string[] Header { get; set; }= Array.Empty<string>();

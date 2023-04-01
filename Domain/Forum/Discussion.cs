@@ -5,7 +5,7 @@ namespace Domain.Forum;
 public class Discussion
 {
     private readonly string _title;
-    private bool _isClosed { get; set; }
+    private bool IsClosed { get; set; }
     public List<Reply> Replies { get; }= new();
 
     public Discussion(string title)
@@ -15,7 +15,7 @@ public class Discussion
     
     public void Reply(Reply reply)
     {
-        if (_isClosed)
+        if (IsClosed)
         {
             throw new DiscussionClosedException();
         }
@@ -24,11 +24,11 @@ public class Discussion
     }
     public void Close()
     {
-        _isClosed = true;
+        IsClosed = true;
     }
 
     public void Open()
     {
-        _isClosed = false;
+        IsClosed = false;
     }
 }

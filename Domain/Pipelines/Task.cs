@@ -1,5 +1,6 @@
 ﻿namespace Domain.Pipelines;
 
+//Pattern used: Composite
 public class Task : IJob
 {
     public readonly List<IJob> Jobs;

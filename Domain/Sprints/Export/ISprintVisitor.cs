@@ -1,4 +1,6 @@
 namespace Domain.Sprints.Export;
+
+//Pattern used: Visitor
 public interface ISprintVisitor
 {
 

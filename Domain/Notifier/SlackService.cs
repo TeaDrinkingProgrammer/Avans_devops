@@ -1,5 +1,6 @@
 ﻿namespace Domain.Notifier;
 
+//Pattern used: Adapter
 public class SlackService : IMessagingService
 {
     private readonly IWriter _writer;

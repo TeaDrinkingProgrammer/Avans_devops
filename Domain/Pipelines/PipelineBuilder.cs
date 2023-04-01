@@ -2,6 +2,7 @@
 
 namespace Domain.Pipelines;
 
+//Pattern used: Builder
 public class PipelineBuilder
 {
     public PipelineBuilder(string pipelineName, IVisitor visitor)
