@@ -50,6 +50,10 @@ public abstract class SprintState
     {
         throw new InvalidOperationException();
     }
-    public abstract void CancelSprint();
+    
+    public virtual void CancelSprint()
+    {
+        throw new IllegalStateAdvanceException();
+    }
     public abstract void setState();
 }

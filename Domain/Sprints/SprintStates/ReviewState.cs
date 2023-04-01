@@ -11,11 +11,6 @@ public class ReviewState : SprintState
         Sprint = sprint;
     }
 
-    public override void CancelSprint()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void setState()
     {
         if (Sprint.SprintReview == null)

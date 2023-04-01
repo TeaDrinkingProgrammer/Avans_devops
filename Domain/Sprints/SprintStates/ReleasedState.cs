@@ -10,11 +10,6 @@ public class ReleasedState : SprintState
         Sprint = sprint;
     }
 
-    public override void CancelSprint()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
     public override void setState()
     {
         Sprint.Project.ScrumMaster.Notify("Sprint has been released");
