@@ -8,11 +8,6 @@ public class CancelledState : SprintState
     {
     }
 
-    public override void UploadReview(string review)
-    {
-        throw new InvalidOperationException();
-    }
-
     public override void ToNextState()
     {
         throw new IllegalStateAdvanceException();

@@ -20,11 +20,6 @@ public class PlannedState : SprintState
         Sprint.BacklogItems.Remove(backlogItem);
     }
 
-    public override void UploadReview(string review)
-    {
-        throw new InvalidOperationException();
-    }
-
     public override void ToNextState()
     {
         AdvanceState(Sprint.InProgressState);

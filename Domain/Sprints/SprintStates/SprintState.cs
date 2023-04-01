@@ -1,5 +1,3 @@
-using Domain.Exceptions;
-
 namespace Domain.Sprints.SprintStates;
 
 public abstract class SprintState
@@ -26,7 +24,10 @@ public abstract class SprintState
         Sprint.State = sprintState;
     }
 
-    public abstract void UploadReview(string review);
+    public virtual void UploadReview(string review)
+    {
+        throw new InvalidOperationException();
+    }
     public abstract void ToNextState();
     public abstract void ReleaseSprint();
     public  abstract void ReviewSprint();
