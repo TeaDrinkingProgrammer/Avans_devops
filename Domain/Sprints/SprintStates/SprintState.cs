@@ -19,13 +19,13 @@ public abstract class SprintState
     {
         throw new InvalidOperationException();
     }
-
+    
     protected void AdvanceState(SprintState sprintState)
     {
         sprintState.setState();
         Sprint.State = sprintState;
     }
-
+    
     public virtual void UploadReview(string review)
     {
         throw new InvalidOperationException();
@@ -35,6 +35,7 @@ public abstract class SprintState
     {
         throw new IllegalStateAdvanceException();
     }
+    
     public virtual void ReleaseSprint()
     {
         throw new IllegalStateAdvanceException();
@@ -44,7 +45,11 @@ public abstract class SprintState
     {
         throw new IllegalStateAdvanceException();
     }
-    public abstract bool RunPipeline();
+    
+    public virtual bool RunPipeline()
+    {
+        throw new InvalidOperationException();
+    }
     public abstract void CancelSprint();
     public abstract void setState();
 }

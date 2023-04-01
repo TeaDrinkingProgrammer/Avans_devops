@@ -25,11 +25,6 @@ public class InProgressState : SprintState
         AdvanceState(Sprint.FinishedState);
     }
 
-    public override bool RunPipeline()
-    {
-        throw new InvalidOperationException();
-    }
-
     public override void CancelSprint()
     {
         AdvanceState(Sprint.CancelledState);
