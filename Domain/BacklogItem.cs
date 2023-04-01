@@ -1,9 +1,10 @@
 using Domain.Forum;
 using Domain.Sprints;
+using Domain.Sprints.Export;
 
 namespace Domain;
 
-public class BacklogItem
+public class BacklogItem : ISprintVisitable
 {
     public string Name { get; set; }
     public TeamMember Developer { get; set; }
@@ -77,5 +78,14 @@ public class BacklogItem
     public void ToDone()
     {
         State.ToDone();
+    }
+
+    public void Accept(ISprintVisitor visitor)
+    {
+        visitor.VisitBacklogItem(this);
+        foreach (var backlogItem in Activities)
+        {
+            backlogItem.Accept(visitor);
+        }
     }
 }

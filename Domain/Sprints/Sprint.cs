@@ -1,9 +1,11 @@
+using Domain.Notifier.Events;
+using Domain.Sprints.Export;
 using Domain.Pipelines;
 using Domain.Sprints.SprintStates;
 
 namespace Domain.Sprints;
 
-public abstract class Sprint
+public abstract class Sprint : ISprintVisitable
 {
     private readonly DateOnly _date;
 
@@ -40,4 +42,12 @@ public abstract class Sprint
     }
     public abstract void ToNextState();
     public abstract void CancelSprint();
+    public void Accept(ISprintVisitor visitor)
+    {
+        visitor.VisitSprint(this);
+        foreach (var backlogItem in BacklogItems)
+        {
+            backlogItem.Accept(visitor);
+        }
+    }
 }
