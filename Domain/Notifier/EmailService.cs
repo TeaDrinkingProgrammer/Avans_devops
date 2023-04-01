@@ -9,8 +9,8 @@ public class EmailService : MessagingService
         _writer = writer;
     }
 
-    public void Send(string reciever, string message)
+    public void Send(string receiver, string message)
     {
-        _writer.WriteLine($"To: {reciever}: {message}");
+        _writer.WriteLine($"To: {receiver}: {message}");
     }
 }

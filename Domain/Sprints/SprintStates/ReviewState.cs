@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using Domain.Exceptions;
 
 namespace Domain.Sprints.SprintStates;

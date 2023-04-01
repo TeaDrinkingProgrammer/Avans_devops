@@ -40,6 +40,10 @@ public abstract class SprintState
     {
         throw new InvalidOperationException();
     }
+    public virtual bool RunPipeline()
+    {
+        throw new InvalidOperationException();
+    }
 
     public virtual void ToNextState()
     {
@@ -52,11 +56,6 @@ public abstract class SprintState
     }
 
     public virtual void ReviewSprint()
-    {
-        throw new IllegalStateAdvanceException();
-    }
-
-    public virtual bool RunPipeline()
     {
         throw new IllegalStateAdvanceException();
     }
