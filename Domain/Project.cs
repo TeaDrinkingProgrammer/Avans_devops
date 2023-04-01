@@ -1,19 +1,16 @@
-using Domain.Notifier.Events;
-
 namespace Domain;
 
 public class Project
 {
-    private readonly string _title;
-
-    public TeamMember ScrumMaster { get; set; }
+    public readonly string Name;
+    
     public TeamMember Tester { get; set; }
     public TeamMember ProductOwner { get; set; }
 
-    public Project(string title, TeamMember scrumMaster, TeamMember tester, TeamMember productOwner)
+    public Project(string name, TeamMember tester, TeamMember productOwner)
     {
-        _title = title;
-        ScrumMaster = scrumMaster;
+        Name = name;
+
         Tester = tester;
         ProductOwner = productOwner;
     }

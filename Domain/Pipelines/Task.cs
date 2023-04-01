@@ -1,8 +1,9 @@
 ﻿namespace Domain.Pipelines;
 
+//Pattern used: Composite
 public class Task : IJob
 {
-    public List<IJob> Jobs;
+    public ICollection<IJob> Jobs { get; }
     public readonly string Name;
 
     public Task(string name)

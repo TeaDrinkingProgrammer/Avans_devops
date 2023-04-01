@@ -2,6 +2,7 @@ using System.Text;
 
 namespace Domain.Sprints.Export;
 
+//Pattern used: Builder
 public class SprintReportBuilder
 {
     private string[] Header { get; set; }= Array.Empty<string>();
@@ -27,7 +28,7 @@ public class SprintReportBuilder
     }
     public void AddBacklogItemsList()
     {
-        var visitor = new BacklogItemsListVisitor(Sprint);
+        var visitor = new BacklogItemsListVisitor();
         Sprint.Accept(visitor);
         
         Body.Add("--------------------BacklogItems--------------------");

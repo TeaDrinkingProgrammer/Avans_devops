@@ -1,14 +1,16 @@
+using Domain.Pipelines;
+
 namespace Domain.Sprints;
 
-public class SprintFactory
+public static class SprintFactory
 {
-    public ReleaseSprint NewReleaseSprint(Project project)
+    public static ReleaseSprint NewReleaseSprint(Project project,TeamMember teamMember,  IPipeline? pipeline = null)
     {
-        return new ReleaseSprint(DateOnly.FromDateTime(DateTime.Now), project);
+        return new ReleaseSprint(project,teamMember, pipeline);
     }
 
-    public ReviewSprint NewReviewSprint(Project project)
+    public static ReviewSprint NewReviewSprint(Project project,TeamMember teamMember, IPipeline? pipeline = null)
     {
-        return new ReviewSprint(DateOnly.FromDateTime(DateTime.Now), project);
+        return new ReviewSprint(project,teamMember, pipeline);
     }
 }

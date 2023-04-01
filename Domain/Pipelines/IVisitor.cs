@@ -1,5 +1,6 @@
 ﻿using Domain.Pipelines.Actions;
 
+//Pattern used: Visitor
 namespace Domain.Pipelines
 {
     public interface IVisitor

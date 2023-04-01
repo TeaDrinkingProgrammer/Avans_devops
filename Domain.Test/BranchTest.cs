@@ -5,6 +5,7 @@ namespace Domain.Test;
 
 public class BranchTest
 {
+    //FR-22.1
     [Fact]
     public void GitRepositoryShouldReturnGitBranch()
     {
@@ -14,6 +15,7 @@ public class BranchTest
         Assert.IsType<GitBranch>(branch);
     }
     
+    //FR-22.2
     [Fact]
     public void SubversionRepositoryShouldReturnSubversionBranch()
     {
@@ -23,6 +25,7 @@ public class BranchTest
         Assert.IsType<SubversionBranch>(branch);
     }
     
+    //FR-22.1
     [Fact]
     public void ShouldPullBranchFromGitRepository()
     {
@@ -32,6 +35,7 @@ public class BranchTest
         branchWriter.Received().WriteLine("Pulling master from https://origin.git");
     }
     
+    //FR-22.2
     [Fact]
     public void ShouldPullBranchFromSubversionRepository()
     {
@@ -47,7 +51,7 @@ public class BranchTest
         var branchWriter = Substitute.For<IWriter>();
         var backlogWriter = Substitute.For<IWriter>();
         var branch = new GitBranch("master", "https://origin.git", branchWriter);
-        new BacklogItem("Backlog Item 1", backlogWriter, new TeamMember("John Doe"))
+        var _ = new BacklogItem("Backlog Item 1", backlogWriter, new TeamMember("John Doe"))
         {
             Branch = branch
         };

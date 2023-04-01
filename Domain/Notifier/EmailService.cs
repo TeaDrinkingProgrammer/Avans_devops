@@ -1,6 +1,6 @@
 namespace Domain.Notifier;
 
-public class EmailService : MessagingService
+public class EmailService : IMessagingService
 {
     private readonly IWriter _writer;
 

@@ -1,17 +1,18 @@
 using Domain.Exceptions;
 
-namespace Domain;
+namespace Domain.BacklogStates;
 
+//Pattern used: State
 public abstract class BacklogState
 {
-    protected readonly IWriter _writer;
-    protected readonly BacklogItem _backlogItem;
+    private readonly IWriter _writer;
+    protected readonly BacklogItem BacklogItem;
     public readonly string StateName;
 
     protected BacklogState(IWriter writer, BacklogItem backlogItem,string stateName)
     {
         _writer = writer;
-        _backlogItem = backlogItem;
+        BacklogItem = backlogItem;
         StateName = stateName;
     }
 
@@ -52,7 +53,7 @@ public abstract class BacklogState
     protected void AdvanceState(BacklogState backlogState)
     {
         backlogState.SetState();
-        _backlogItem.State = backlogState;
+        BacklogItem.State = backlogState;
         _writer.WriteLine($"Transferring backlog item from {StateName} to {backlogState.StateName}...");
     }
 }

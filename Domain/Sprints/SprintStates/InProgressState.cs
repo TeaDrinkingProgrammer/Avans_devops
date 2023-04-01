@@ -1,21 +1,9 @@
-using Domain.Exceptions;
-
 namespace Domain.Sprints.SprintStates;
 
 public class InProgressState : SprintState
 {
     public InProgressState(Sprint sprint) : base(sprint)
     {
-    }
-    
-    public override void AddBacklogItem(BacklogItem backlogItem)
-    {
-        AddBacklogItemImpl(backlogItem);
-    }
-    
-    public override void RemoveBacklogItem(BacklogItem backlogItem)
-    {
-        RemoveBacklogItemImpl(backlogItem);
     }
 
     public override void ToNextState()

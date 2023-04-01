@@ -1,4 +1,4 @@
-using System.Transactions;
+using Domain.Pipelines;
 using Domain.Sprints.SprintStates;
 
 namespace Domain.Sprints;
@@ -6,7 +6,7 @@ namespace Domain.Sprints;
 public class ReleaseSprint : Sprint
 {
     public ReleasedState ReleasedState { get;}
-    public ReleaseSprint(DateOnly date, Project project) : base(date, project)
+    public ReleaseSprint(Project project, TeamMember scrumMaster, IPipeline? pipeline) : base(project, scrumMaster, pipeline)
     {
         ReleasedState = new ReleasedState(this);
     }

@@ -1,6 +1,7 @@
 ﻿namespace Domain.Notifier;
 
-public interface MessagingService
+//Pattern used: Adapter
+public interface IMessagingService
 {
     public void Send(string receiver, string message);
 }

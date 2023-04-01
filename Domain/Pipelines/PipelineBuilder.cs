@@ -2,6 +2,7 @@
 
 namespace Domain.Pipelines;
 
+//Pattern used: Builder
 public class PipelineBuilder
 {
     public PipelineBuilder(string pipelineName, IVisitor visitor)
@@ -16,7 +17,7 @@ public class PipelineBuilder
     
     public PipelineBuilder AddTask(Task task)
     {
-        _pipeline.tasks.Add(task);
+        _pipeline.Tasks.Add(task);
         return this;
     }
 

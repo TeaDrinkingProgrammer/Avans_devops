@@ -1,3 +1,4 @@
+using Domain.BacklogStates;
 using Domain.Branches;
 using Domain.Forum;
 using Domain.Sprints;
@@ -10,18 +11,18 @@ public class BacklogItem : ISprintVisitable
     public string Name { get; set; }
     public TeamMember Developer { get; set; }
     private IBranch? _branch;
-    public IBranch Branch
+    public IBranch? Branch
     {
         get => _branch;
         set
         {
             _branch = value;
-            _branch.pull();
+            _branch?.pull();
         }
     }
     public ICollection<BacklogItem> Activities { get; set; } = new List<BacklogItem>();
 
-    public Sprint Sprint { get; set; }
+    public Sprint? Sprint { get; set; }
     
     public Discussion Discussion { get; }
 
