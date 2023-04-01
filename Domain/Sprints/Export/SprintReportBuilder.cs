@@ -34,16 +34,7 @@ public class SprintReportBuilder
         Body.AddRange(visitor.Export());
         Body.Add("----------------------------------------------------");
     }
-    public void AddTeamConsistency()
-    {
-        var visitor = new TeamConsistencyVisitor(Sprint);
-        Sprint.Accept(visitor);
-        
-        Body.Add("");
-        Body.AddRange(visitor.Export());
-        Body.Add("");
-    }
-    
+
 
     public void Build()
     {

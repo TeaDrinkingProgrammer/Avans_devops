@@ -21,8 +21,8 @@ public class SprintVisitorTest
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
 
-        var backlogItem = new BacklogItem("1", writer, sprint, developer, tester);
-        var backlogItem2 = new BacklogItem("2", writer, sprint, developer, tester);
+        var backlogItem = new BacklogItem("1", writer, developer);
+        var backlogItem2 = new BacklogItem("2", writer,  developer);
         
         sprint.AddBacklogItem(backlogItem);
         sprint.AddBacklogItem(backlogItem2);
@@ -51,8 +51,8 @@ public class SprintVisitorTest
         var sprintFactory = new SprintFactory();
         var sprint = sprintFactory.NewReleaseSprint(project);
 
-        var backlogItem = new BacklogItem("1", writer, sprint, developer, tester);
-        var backlogItem2 = new BacklogItem("2", writer, sprint, developer, tester);
+        var backlogItem = new BacklogItem("1", writer, developer);
+        var backlogItem2 = new BacklogItem("2", writer,  developer);
         
         sprint.AddBacklogItem(backlogItem);
         sprint.AddBacklogItem(backlogItem2);

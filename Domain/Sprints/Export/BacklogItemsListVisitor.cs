@@ -10,11 +10,6 @@ public class BacklogItemsListVisitor : ReportVisitor
 
     public override string[] Export()
     {
-        var result = new List<string>();
-        for (var i = 0; i < _content.Count; i++)
-        {
-        }
-
         return _content.ToArray();
     }
 
