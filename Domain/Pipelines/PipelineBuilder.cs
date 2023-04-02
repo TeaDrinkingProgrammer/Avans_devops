@@ -34,12 +34,7 @@ public class PipelineBuilder
         {
             _task = new Task(taskName);
         }
-        
-        public static TaskBuilder CreateTask(string taskName)
-        {
-            return new TaskBuilder(taskName);
-        }
-        
+
         public TaskBuilder AddTask(Task task)
         {
             _task.Jobs.Add(task);
