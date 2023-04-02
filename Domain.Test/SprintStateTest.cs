@@ -109,6 +109,10 @@ public class SprintStateTest
         //Assert
         scrumMasterWriter.Received().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Sprint is finished");
     }
+    
+    //FR-13.2
+    //FR-13.4
+    //FR-14
     [Fact]
     public void ScrumMasterAndOwnerShouldGetNotificationWhenSprintHasBeenReleased()
     {
@@ -137,6 +141,34 @@ public class SprintStateTest
         //Assert
         scrumMasterWriter.Received().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Sprint has been released");
         productOwnerWriter.Received().WriteLine("To: Jan de Productowner <jandeproductowner@gmail.com>: Sprint has been released");
+        Assert.Equal(sprint.State, sprint.ReleasedState);
+    }
+    
+    //FR-13.3
+    [Fact]
+    public void ScrumMasterShouldGetNotificationWhenPipelineFails()
+    {
+        //Arrange
+        var scrumMasterWriter = Substitute.For<IWriter>();
+        var pipeline = Substitute.For<IPipeline>();
+        pipeline.Run().Returns(false);
+        
+        var project = new Project("SO&A 2", new TeamMember("Henk de Testerman","henkdetesterman@gmail.com"),
+            new TeamMember("Jan de Productowner", "jandeproductowner@gmail.com"));
+        var sprint = SprintFactory.NewReleaseSprint(project, new TeamMember("Jan de Scrumman", "jandescrumman@gmail.com"), pipeline);
+
+        var scrumMasterNotificationService = new NotificationService(new EmailService(scrumMasterWriter), new SlackService(scrumMasterWriter));
+
+        sprint.ScrumMaster.Subscribe(scrumMasterNotificationService);
+
+        sprint.ToNextState();
+        sprint.ToNextState();
+        
+        //Act
+        sprint.Release();
+        
+        //Assert
+        scrumMasterWriter.Received().WriteLine("To: Jan de Scrumman <jandescrumman@gmail.com>: Pipeline failed");
     }
 
     //FR-13.1
