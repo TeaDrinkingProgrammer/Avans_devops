@@ -31,7 +31,7 @@ public class SprintVisitorTest
         sprintReportBuilder.AddBacklogItemsList();
         sprintReportBuilder.Build();
         
-        exportStrategy.Received().Export("--------------------BacklogItems--------------------\n--------------------\n1\nDeveloper: Linus Torvalds\nState: Todo\n--------------------\n2\nDeveloper: Linus Torvalds\nState: Todo\n--------------------\n----------------------------------------------------\n\n");
+        exportStrategy.Received().Export($"--------------------BacklogItems--------------------{Environment.NewLine}--------------------{Environment.NewLine}1{Environment.NewLine}Developer: Linus Torvalds{Environment.NewLine}State: Todo{Environment.NewLine}--------------------{Environment.NewLine}2{Environment.NewLine}Developer: Linus Torvalds{Environment.NewLine}State: Todo{Environment.NewLine}--------------------{Environment.NewLine}----------------------------------------------------{Environment.NewLine}{Environment.NewLine}");
     }
     
     //FR-20
@@ -61,7 +61,7 @@ public class SprintVisitorTest
         sprintReportBuilder.AddFooter(footer);
         sprintReportBuilder.Build();
         
-        exportStrategy.Received().Export("Company header: SO&A 2\nAuthor name 1, Author name 2\n\n\n-------------------\n\n");
+        exportStrategy.Received().Export($"Company header: SO&A 2{Environment.NewLine}Author name 1, Author name 2{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}-------------------{Environment.NewLine}{Environment.NewLine}");
     }
 
 }
