@@ -32,9 +32,14 @@ public class FinishedState : SprintState
 
     public override bool RunPipeline()
     {
-        if (Sprint.Pipeline == null || !Sprint.Pipeline.Run())
+        if (Sprint.Pipeline == null)
         {
             throw new IllegalStateAdvanceException();
+        }
+
+        if (!Sprint.Pipeline.Run())
+        {
+            Sprint.ScrumMaster.Notify("Pipeline failed");
         }
         return true;
     }
